@@ -26,10 +26,10 @@ export async function createCategoryModification(prevState: any, formData: FormD
         await prisma.categoryModification.create({
             data: {
                 employee_id,
-                current_job_category: current_job_category ? current_job_category.trim() : null,
-                new_job_category_id: parseInt(new_job_category_id, 10),
+                current_category_name: current_job_category ? current_job_category.trim() : null,
+                new_category_id: parseInt(new_job_category_id, 10),
                 new_job_title_id: new_job_title_id ? parseInt(new_job_title_id, 10) : null,
-                decision_number: decision_number ? decision_number.trim() : null,
+                decision_num: decision_number ? decision_number.trim() : null,
                 decision_date: decision_date ? new Date(decision_date) : null,
                 created_by: 'النظام'
             }

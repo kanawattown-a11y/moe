@@ -285,8 +285,9 @@ model Employee {
   weekly_quotas              WeeklyQuota[]
   transfers                  TransferOrLoan[]
   
-  job_title_appointment      JobTitle?            @relation("ApptJobTitle", fields: [appt_job_title_id], references: [id])
-  job_title_current          JobTitle?            @relation("CurrJobTitle", fields: [curr_job_title_id], references: [id])
+  job_title_appointment      JobTitle?            @relation("ApptJobTitle", fields: [appt_job_title_id], references: [id], map: "fkey_employee_appt_job_title")
+  job_title_current          JobTitle?            @relation("CurrJobTitle", fields: [curr_job_title_id], references: [id], map: "fkey_employee_curr_job_title")
+
 
   @@map("جدول_الذاتيات")
 }

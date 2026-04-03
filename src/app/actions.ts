@@ -19,7 +19,7 @@ export async function createEmployee(formData: FormData) {
             first_name: formData.get('first_name') as string,
             father_name: formData.get('father_name') as string,
             last_name: formData.get('last_name') as string,
-            mother_name: formData.get('mother_name') as string,
+            mother_full_name: formData.get('mother_name') as string,
             self_number: formData.get('self_number') as string,
             national_id: formData.get('national_id') as string,
             job_code: formData.get('job_code') as string,
@@ -27,15 +27,15 @@ export async function createEmployee(formData: FormData) {
             birth_place: formData.get('birth_place') as string,
             birth_date: formData.get('birth_date') ? new Date(formData.get('birth_date') as string) : null,
             mobile: formData.get('mobile') as string,
-            address_details: formData.get('address_details') as string,
+            suwayda_full_address: formData.get('address_details') as string,
             city_id: formData.get('city_id') ? Number(formData.get('city_id')) : null,
             village_id: formData.get('village_id') ? Number(formData.get('village_id')) : null,
             marital_status_id: formData.get('marital_status_id') ? Number(formData.get('marital_status_id')) : null,
             children_count: formData.get('children_count') ? Number(formData.get('children_count')) : null,
             school_id: formData.get('school_id') ? Number(formData.get('school_id')) : null,
             complex_id: formData.get('complex_id') ? Number(formData.get('complex_id')) : null,
-            job_title_current_id: formData.get('job_title_id') ? Number(formData.get('job_title_id')) : null,
-            job_title_at_appt_id: formData.get('job_title_at_appt_id') ? Number(formData.get('job_title_at_appt_id')) : null,
+            curr_job_title_id: formData.get('job_title_id') ? Number(formData.get('job_title_id')) : null,
+            appt_job_title_id: formData.get('job_title_at_appt_id') ? Number(formData.get('job_title_at_appt_id')) : null,
             appointment_type_id: formData.get('appointment_type_id') ? Number(formData.get('appointment_type_id')) : null,
             job_category_id: formData.get('job_category_id') ? Number(formData.get('job_category_id')) : null,
             status_id: formData.get('status_id') ? Number(formData.get('status_id')) : null,
@@ -46,7 +46,7 @@ export async function createEmployee(formData: FormData) {
             family_allowance: formData.get('family_allowance') ? Number(formData.get('family_allowance')) : 0,
             nature_of_work_allowance: formData.get('nature_of_work_allowance') ? Number(formData.get('nature_of_work_allowance')) : 0,
             other_deductions: formData.get('other_deductions') ? Number(formData.get('other_deductions')) : 0,
-            full_name: `${formData.get('first_name')} ${formData.get('father_name')} ${formData.get('last_name')}`.trim(),
+            full_name_triplet: `${formData.get('first_name')} ${formData.get('father_name')} ${formData.get('last_name')}`.trim(),
         },
     });
 
@@ -54,7 +54,7 @@ export async function createEmployee(formData: FormData) {
         action: 'CREATE',
         resource: 'Employee',
         resourceId: employee.id.toString(),
-        details: `Created employee: ${employee.full_name}`,
+        details: `Created employee: ${employee.full_name_triplet}`,
     });
 
     redirect('/admin/employees');
@@ -101,7 +101,7 @@ export async function updateEmployee(id: number, formData: FormData) {
             first_name: firstName,
             father_name: fatherName,
             last_name: lastName,
-            mother_name: motherName,
+            mother_full_name: motherName,
 
             self_number: selfNumber,
             national_id: nationalId,
@@ -112,7 +112,7 @@ export async function updateEmployee(id: number, formData: FormData) {
             birth_date: birthDate,
 
             mobile: mobile,
-            address_details: addressDetails,
+            suwayda_full_address: addressDetails,
             city_id: cityId,
             village_id: villageId,
 
@@ -121,8 +121,8 @@ export async function updateEmployee(id: number, formData: FormData) {
 
             school_id: schoolId,
             complex_id: complexId,
-            job_title_current_id: jobTitleId,
-            job_title_at_appt_id: jobTitleApptId,
+            curr_job_title_id: jobTitleId,
+            appt_job_title_id: jobTitleApptId,
 
             appointment_type_id: appointmentTypeId,
             job_category_id: jobCategoryId,
@@ -135,7 +135,7 @@ export async function updateEmployee(id: number, formData: FormData) {
             family_allowance: formData.get('family_allowance') ? Number(formData.get('family_allowance')) : 0,
             nature_of_work_allowance: formData.get('nature_of_work_allowance') ? Number(formData.get('nature_of_work_allowance')) : 0,
             other_deductions: formData.get('other_deductions') ? Number(formData.get('other_deductions')) : 0,
-            full_name: `${firstName} ${fatherName} ${lastName}`.trim(),
+            full_name_triplet: `${firstName} ${fatherName} ${lastName}`.trim(),
         },
     });
 
@@ -232,7 +232,7 @@ export async function addEducation(employeeId: number, formData: FormData) {
             university_id: universityId,
             college_id: collegeId,
             institute_id: instituteId,
-            graduation_year: graduationYear
+            grad_year: graduationYear
         }
     });
 
@@ -247,10 +247,10 @@ export async function addVacation(employeeId: number, formData: FormData) {
     const decisionNum = formData.get('decision_num') as string;
     const notes = formData.get('notes') as string;
 
-    await prisma.vacation.create({
+    await prisma.leaveRequest.create({
         data: {
             employee_id: employeeId,
-            type,
+            leave_type: type,
             duration,
             start_date: startDateStr ? new Date(startDateStr) : null,
             end_date: endDateStr ? new Date(endDateStr) : null,
@@ -270,15 +270,15 @@ export async function addMovement(employeeId: number, formData: FormData) {
     const resumptionDateStr = formData.get('resumption_date') as string;
     const notes = formData.get('notes') as string;
 
-    await prisma.movement.create({
+    await prisma.transferOrLoan.create({
         data: {
             employee_id: employeeId,
-            type, // Maps to 'نوع_الإجراء'
-            destination,
+            action_type: type, // Maps to 'نوع_الإجراء'
+            entity: destination,
             decision_num: decisionNum,
             decision_date: decisionDateStr ? new Date(decisionDateStr) : null,
-            leave_date: leaveDateStr ? new Date(leaveDateStr) : null,
-            resumption_date: resumptionDateStr ? new Date(resumptionDateStr) : null,
+            start_date: leaveDateStr ? new Date(leaveDateStr) : null,
+            return_date: resumptionDateStr ? new Date(resumptionDateStr) : null,
             notes
         }
     });

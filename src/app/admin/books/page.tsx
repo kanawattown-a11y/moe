@@ -13,7 +13,7 @@ export default async function AdminBooksPage(props: { searchParams: Promise<{ q?
         where: query ? {
             OR: [
                 { title: { contains: query, mode: 'insensitive' } },
-                { author_name: { contains: query, mode: 'insensitive' } }
+                { author: { contains: query, mode: 'insensitive' } }
             ]
         } : {},
         include: {
@@ -63,7 +63,7 @@ export default async function AdminBooksPage(props: { searchParams: Promise<{ q?
                                 <td className="p-5 font-bold text-gray-900 group-hover:text-primary transition-colors">
                                     {b.title}
                                 </td>
-                                <td className="p-5 text-gray-700">{b.author_name || '-'}</td>
+                                <td className="p-5 text-gray-700">{b.author || '-'}</td>
                                 <td className="p-5">
                                     <span className="px-3 py-1 rounded-full text-xs font-bold border bg-gray-50 text-gray-700 border-gray-200">
                                         {b.category?.name || '-'}

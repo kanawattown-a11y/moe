@@ -83,7 +83,7 @@ export default async function LibraryPage({ searchParams }: { searchParams: { q?
                             </div>
                             <div className="p-4 flex flex-col flex-grow">
                                 <h3 className="font-bold text-gray-900 mb-1 line-clamp-2">{book.title}</h3>
-                                <p className="text-sm text-gray-600 mb-2">{book.author_name || 'وزارة التربية'}</p>
+                                <p className="text-sm text-gray-600 mb-2">{book.author || 'وزارة التربية'}</p>
                                 {book.category && (
                                     <span className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded mb-4 self-start">
                                         {book.category.name}

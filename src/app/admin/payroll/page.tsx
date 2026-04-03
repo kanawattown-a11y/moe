@@ -17,7 +17,7 @@ export default async function PayrollPage(props: { searchParams: Promise<{ month
         include: {
             employee: {
                 select: {
-                    full_name: true,
+                    full_name_triplet: true,
                     job_title_current: { select: { name: true } }
                 }
             }

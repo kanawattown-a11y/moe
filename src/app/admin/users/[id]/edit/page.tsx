@@ -10,13 +10,13 @@ export default async function EditUserPage(props: { params: Promise<{ id: string
 
     const employees = await prisma.employee.findMany({
         where: { status_id: 1 }, // Assuming 1 is "Active"
-        select: { id: true, full_name: true, self_number: true },
-        orderBy: { full_name: 'asc' }
+        select: { id: true, full_name_triplet: true, self_number: true },
+        orderBy: { full_name_triplet: 'asc' }
     });
 
     const employeeOptions = employees.map(emp => ({
         value: emp.id,
-        label: `${emp.full_name} (${emp.self_number})`
+        label: `${emp.full_name_triplet} (${emp.self_number})`
     }));
 
     if (!user) {

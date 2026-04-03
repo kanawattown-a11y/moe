@@ -145,7 +145,7 @@ export default function PayrollClient({ records, summary }: any) {
                                     >
                                         <td className="px-8 py-6">
                                             <div>
-                                                <p className="font-black text-gray-900 group-hover:text-primary transition-colors">{record.employee.full_name}</p>
+                                                <p className="font-black text-gray-900 group-hover:text-primary transition-colors">{record.employee.full_name_triplet}</p>
                                                 <p className="text-[10px] text-gray-400 font-bold">{record.employee.job_title_current?.name || 'موظف'}</p>
                                             </div>
                                         </td>

@@ -114,7 +114,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                             <InfoItem label="المجمع التربوي" value={employee.complex?.name} />
 
                             <InfoItem label="الحالة" value={employee.status?.name} />
-                            <InfoItem label="العنوان" value={`${employee.city?.name || ''} - ${employee.village?.name || ''} - ${employee.address_details || ''}`} fullWidth />
+                            <InfoItem label="العنوان" value={`${employee.city?.name || ''} - ${employee.village?.name || ''} - ${employee.suwayda_full_address || ''}`} fullWidth />
                         </dl>
                     </div>
                 </div>

@@ -56,7 +56,7 @@ export default async function ProfilePage() {
                                         <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
                                     </div>
                                 </div>
-                                <h2 className="mt-4 text-2xl font-bold text-gray-900">{employee?.full_name || user.username}</h2>
+                                <h2 className="mt-4 text-2xl font-bold text-gray-900">{employee?.full_name_triplet || user.username}</h2>
                                 <p className="text-primary font-bold text-sm bg-primary/5 inline-block px-4 py-1 rounded-full mt-2">
                                     {user.role}
                                 </p>

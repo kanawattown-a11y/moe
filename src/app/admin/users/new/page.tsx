@@ -5,13 +5,13 @@ import Link from 'next/link';
 export default async function NewUserPage() {
     const employees = await prisma.employee.findMany({
         where: { status_id: 1 }, // Active
-        select: { id: true, full_name: true, self_number: true },
-        orderBy: { full_name: 'asc' }
+        select: { id: true, full_name_triplet: true, self_number: true },
+        orderBy: { full_name_triplet: 'asc' }
     });
 
     const employeeOptions = employees.map(emp => ({
         value: emp.id,
-        label: `${emp.full_name} (${emp.self_number})`
+        label: `${emp.full_name_triplet} (${emp.self_number})`
     }));
 
     return (

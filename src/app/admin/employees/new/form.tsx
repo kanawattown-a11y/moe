@@ -115,7 +115,7 @@ export default function EmployeeForm({
                         </div>
                         <div>
                             <label className={labelClasses}>اسم الأم</label>
-                            <input type="text" name="mother_name" defaultValue={initialData?.mother_name} className={inputClasses} placeholder="اسم الأم" />
+                            <input type="text" name="mother_name" defaultValue={initialData?.mother_full_name} className={inputClasses} placeholder="اسم الأم" />
                         </div>
                     </div>
 
@@ -190,7 +190,7 @@ export default function EmployeeForm({
                             </div>
                             <div>
                                 <label className={labelClasses}>تفاصيل العنوان</label>
-                                <input type="text" name="address_details" defaultValue={initialData?.address_details} placeholder="الشارع، البناء..." className={inputClasses} />
+                                <input type="text" name="address_details" defaultValue={initialData?.suwayda_full_address} placeholder="الشارع، البناء..." className={inputClasses} />
                             </div>
                         </div>
                     </div>

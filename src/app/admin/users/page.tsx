@@ -17,7 +17,7 @@ async function getUsers(query: string) {
         where,
         include: {
             employee: {
-                select: { full_name: true, self_number: true }
+                select: { full_name_triplet: true, self_number: true }
             }
         },
         orderBy: { username: 'asc' }
@@ -86,7 +86,7 @@ export default async function UsersPage(props: { searchParams: Promise<{ q?: str
                                 <td className="p-5 text-sm text-gray-500 font-medium">
                                     {user.employee ? (
                                         <span className="text-gray-900">
-                                            {user.employee.full_name} <br />
+                                            {user.employee.full_name_triplet} <br />
                                             <small className="text-gray-400">({user.employee.self_number})</small>
                                         </span>
                                     ) : (

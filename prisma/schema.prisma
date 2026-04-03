@@ -62,62 +62,53 @@ __To ? @relation("_To", fields: [], references: [])
 __To ? @relation("_To", fields: [], references: [])
 @@map("جدول_أجر_بدء_التعيين")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_اقسام_الكلية Int @id @default(autoincrement()) @map("معرف_اقسام_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اقسام_الكلية String? @map("اقسام_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الكلية Int? @map("معرف_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الكلية String? @map("اسم_الكلية")
-__To ? @relation("_To", fields: [], references: [], map: "fk_col_dep_col")
-__To [] @relation("_To")
-@@map("جدول_اقسام_الكليات")
+model CollegeDepartment {
+  id              Int      @id @default(autoincrement()) @map("معرف_اقسام_الكلية")
+  name            String?  @map("اقسام_الكلية")
+  college_id      Int?     @map("معرف_الكلية")
+  college_name    String?  @map("اسم_الكلية")
+
+  college         College? @relation(fields: [college_id], references: [id], map: "fk_col_dep_col")
+  science_details ScienceCollegeDetail[]
+
+  @@map("جدول_اقسام_الكليات")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_القسم_للشهادة_الأعلى Int @id @default(autoincrement()) @map("معرف_القسم_للشهادة_الأعلى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// القسم_للشهادة_الأعلى String? @map("القسم_للشهادة_الأعلى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الكلية Int? @map("معرف_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الكلية String? @map("اسم_الكلية")
-__To ? @relation("_To", fields: [], references: [], map: "fk_hcol_dep_col")
-__To [] @relation("_To")
-@@map("جدول_اقسام_الكليات_للشهادة_الأعلى")
+model HigherCollegeDepartment {
+  id              Int      @id @default(autoincrement()) @map("معرف_القسم_للشهادة_الأعلى")
+  name            String?  @map("القسم_للشهادة_الأعلى")
+  college_id      Int?     @map("معرف_الكلية")
+  college_name    String?  @map("اسم_الكلية")
+
+  college         College? @relation(fields: [college_id], references: [id], map: "fk_hcol_dep_col")
+  higher_science_details HigherScienceCollegeDetail[]
+
+  @@map("جدول_اقسام_الكليات_للشهادة_الأعلى")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_اقسام_المعهد Int @id @default(autoincrement()) @map("معرف_اقسام_المعهد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_اقسام_المعهد String? @map("اسم_اقسام_المعهد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المعهد Int? @map("معرف_المعهد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_المعهد String? @map("اسم_المعهد")
-__To ? @relation("_To", fields: [], references: [], map: "fk_ins_dep_ins")
-@@map("جدول_اقسام_المعاهد")
+model InstituteDepartment {
+  id              Int      @id @default(autoincrement()) @map("معرف_اقسام_المعهد")
+  name            String?  @map("اسم_اقسام_المعهد")
+  institute_id    Int?     @map("معرف_المعهد")
+  institute_name  String?  @map("اسم_المعهد")
+
+  institute       Institute? @relation(fields: [institute_id], references: [id], map: "fk_ins_dep_ins")
+
+  @@map("جدول_اقسام_المعاهد")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_اقسام_المعهد_للشهادة_الأعلى Int @id @default(autoincrement()) @map("معرف_اقسام_المعهد_للشهادة_الأعلى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اقسام_المعهد_للشهادة_الأعلى String? @map("اقسام_المعهد_للشهادة_الأعلى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المعهد Int? @map("معرف_المعهد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_المعهد String? @map("اسم_المعهد")
-__To ? @relation("_To", fields: [], references: [], map: "fk_hins_dep_ins")
-@@map("جدول_اقسام_المعاهد_للشهادة_الأعلى")
+model HigherInstituteDepartment {
+  id              Int      @id @default(autoincrement()) @map("معرف_اقسام_المعهد_للشهادة_الأعلى")
+  name            String?  @map("اقسام_المعهد_للشهادة_الأعلى")
+  institute_id    Int?     @map("معرف_المعهد")
+  institute_name  String?  @map("اسم_المعهد")
+
+  institute       Institute? @relation(fields: [institute_id], references: [id], map: "fk_hins_dep_ins")
+
+  @@map("جدول_اقسام_المعاهد_للشهادة_الأعلى")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الامانة Int @id @default(autoincrement()) @map("معرف_الامانة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الامانة String @map("الامانة")
-@@map("جدول_الأمانة_السويداء")
+model SuwaydaSecretariat {
+  id              Int      @id @default(autoincrement()) @map("معرف_الامانة")
+  name            String   @map("الامانة")
+
+  @@map("جدول_الأمانة_السويداء")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -163,83 +154,58 @@ model  {
 __To ? @relation("_To", fields: [], references: [])
 @@map("جدول_الاجازات")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المقال Int @id @default(autoincrement()) @map("معرف_المقال")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// العنوان String @map("العنوان")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الرابط_الدائم String @unique @map("الرابط_الدائم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المحتوى String @map("المحتوى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// مقتطف String? @map("مقتطف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رابط_الصورة String? @map("رابط_الصورة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// منشور Boolean @default(false) @map("منشور")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_الإنشاء DateTime @default(now()) @map("تاريخ_الإنشاء")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_التحديث DateTime @map("تاريخ_التحديث")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الكاتب Int? @map("معرف_الكاتب")
-__To ? @relation("_To", fields: [], references: [])
-@@map("جدول_الاخبار")
+model News {
+  id              Int      @id @default(autoincrement()) @map("معرف_المقال")
+  title           String   @map("العنوان")
+  slug            String   @unique @map("الرابط_الدائم")
+  content         String   @map("المحتوى")
+  excerpt         String?  @map("مقتطف")
+  image_url       String?  @map("رابط_الصورة")
+  is_published    Boolean  @default(false) @map("منشور")
+  created_at      DateTime @default(now()) @map("تاريخ_الإنشاء")
+  updated_at      DateTime @updatedAt @map("تاريخ_التحديث")
+  author_id       Int?     @map("معرف_الكاتب")
+
+  @@map("جدول_الاخبار")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_التأشير Int @id @default(autoincrement()) @map("معرف_التأشير")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الموظف Int? @map("معرف_الموظف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رقم_قرار_الترفيع String? @map("رقم_قرار_الترفيع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_قرار_الترفيع DateTime? @map("تاريخ_قرار_الترفيع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رقم_قرار_التأشير String? @map("رقم_قرار_التأشير")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_قرار_التأشير DateTime? @map("تاريخ_قرار_التأشير")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_قرار_الترفيع String? @map("اسم_قرار_الترفيع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// ملاحظات String? @map("ملاحظات")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تم_بواسطة String? @map("تم_بواسطة")
-__To ? @relation("_To", fields: [], references: [], map: "fk_vs_aud_emp")
-@@map("جدول_التأشير")
+model VisaAudit {
+  id                  Int       @id @default(autoincrement()) @map("معرف_التأشير")
+  employee_id         Int?      @map("معرف_الموظف")
+  promotion_decision  String?   @map("رقم_قرار_الترفيع")
+  promotion_date      DateTime? @map("تاريخ_قرار_الترفيع")
+  visa_decision       String?   @map("رقم_قرار_التأشير")
+  visa_date           DateTime? @map("تاريخ_قرار_التأشير")
+  promotion_name      String?   @map("اسم_قرار_الترفيع")
+  notes               String?   @map("ملاحظات")
+  created_by          String?   @map("تم_بواسطة")
+
+  employee            Employee? @relation(fields: [employee_id], references: [id], map: "fk_vs_aud_emp")
+
+  @@map("جدول_التأشير")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الترفيع Int @id @default(autoincrement()) @map("معرف_الترفيع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الموظف Int? @map("معرف_الموظف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الأجر_قبل_الترفيع Float? @map("الأجر_قبل_الترفيع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الأجر_بعد_الترفيع Float? @map("الأجر_بعد_الترفيع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// درجة_الكفاءة Float? @map("درجة_الكفاءة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نسبة_العلاوة Float? @map("نسبة_العلاوة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// مقدار_العلاوة Float? @map("مقدار_العلاوة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المدة Float? @map("المدة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// ملاحظات String? @map("ملاحظات")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// التاريخ_الحالي DateTime? @map("التاريخ_الحالي")
-__To ? @relation("_To", fields: [], references: [])
-@@map("جدول_الترفيع")
+model Promotion {
+  id                   Int       @id @default(autoincrement()) @map("معرف_الترفيع")
+  employee_id          Int?      @map("معرف_الموظف")
+  salary_before        Float?    @map("الأجر_قبل_الترفيع")
+  salary_after         Float?    @map("الأجر_بعد_الترفيع")
+  competence_degree    Float?    @map("درجة_الكفاءة")
+  allowance_percent    Float?    @map("نسبة_العلاوة")
+  allowance_amount     Float?    @map("مقدار_العلاوة")
+  duration             Float?    @map("المدة")
+  notes                String?   @map("ملاحظات")
+  current_date         DateTime? @map("التاريخ_الحالي")
+
+  employee             Employee? @relation(fields: [employee_id], references: [id])
+
+  @@map("جدول_الترفيع")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الثانوية Int @id @default(autoincrement()) @map("معرف_الثانوية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الثانوية String? @map("اسم_الثانوية")
-__To [] @relation("_To")
-@@map("جدول_الثانوية")
+model HighSchool {
+  id              Int      @id @default(autoincrement()) @map("معرف_الثانوية")
+  name            String?  @map("اسم_الثانوية")
+
+  branches        HighSchoolBranch[]
+
+  @@map("جدول_الثانوية")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -362,61 +328,46 @@ model  {
   __To [] @relation("_To")
   @@map("جدول_الذاتيات")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الجدول_المرتبط Int @id @default(autoincrement()) @map("معرف_الجدول_المرتبط")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_القائمة String? @map("اسم_القائمة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الحقل_في_الجدول_الأساسي String? @map("اسم_الحقل_في_الجدول_الأساسي")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الجدول_المرتبط String? @map("اسم_الجدول_المرتبط")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الحقل_الظاهر String? @map("اسم_الحقل_الظاهر")
-@@map("جدول_الربط")
+model BridgeTable {
+  id                    Int      @id @default(autoincrement()) @map("معرف_الجدول_المرتبط")
+  list_name             String?  @map("اسم_القائمة")
+  main_table_field      String?  @map("اسم_الحقل_في_الجدول_الأساسي")
+  linked_table_name     String?  @map("اسم_الجدول_المرتبط")
+  display_field_name    String?  @map("اسم_الحقل_الظاهر")
+
+  @@map("جدول_الربط")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الشعبة Int @id @default(autoincrement()) @map("معرف_الشعبة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الرقم_الاحصائي String? @map("الرقم_الاحصائي")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الدائرة String? @map("الدائرة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الشعبة String? @map("الشعبة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الدائرة Int? @map("معرف_الدائرة")
-__To ? @relation("_To", fields: [], references: [], map: "fk_sec_dep")
-@@map("جدول_الشعب")
+model Section {
+  id              Int      @id @default(autoincrement()) @map("معرف_الشعبة")
+  stat_number     String?  @map("الرقم_الاحصائي")
+  department      String?  @map("الدائرة")
+  section         String?  @map("الشعبة")
+  department_id   Int?     @map("معرف_الدائرة")
+
+  department_ref  Department? @relation(fields: [department_id], references: [id], map: "fk_sec_dep")
+
+  @@map("جدول_الشعب")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_العمل_المكلف_به Int @id @map("معرف_العمل_المكلف_به")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// العمل_المكلف_به String? @map("العمل_المكلف_به")
-__To [] @relation("_To")
-@@map("جدول_العمل_المكلف_به")
+model AssignedWork {
+  id              Int      @id @map("معرف_العمل_المكلف_به")
+  name            String?  @map("العمل_المكلف_به")
+
+  employees       Employee[]
+
+  @@map("جدول_العمل_المكلف_به")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المكتب Int @id @default(autoincrement()) @map("معرف_المكتب")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الطابق String? @map("الطابق")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الجناح String? @map("الجناح")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// العنوان String? @map("العنوان")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رقم_المكتب Int? @map("رقم_المكتب")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_المكتب String? @map("اسم_المكتب")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الشعبة Int? @map("معرف_الشعبة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الدائرة Int? @map("معرف_الدائرة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// هاتف_المكتب Int? @map("هاتف_المكتب")
-@@map("جدول_العمل_مفصل")
+model WorkDetail {
+  id              Int      @id @default(autoincrement()) @map("معرف_المكتب")
+  floor           String?  @map("الطابق")
+  wing            String?  @map("الجناح")
+  address         String?  @map("العنوان")
+  office_number   Int?     @map("رقم_المكتب")
+  office_name     String?  @map("اسم_المكتب")
+  section_id      Int?     @map("معرف_الشعبة")
+  department_id   Int?     @map("معرف_الدائرة")
+  office_phone    Int?     @map("هاتف_المكتب")
+
+  @@map("جدول_العمل_مفصل")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -471,16 +422,17 @@ __To ? @relation("_To", fields: [], references: [])
 __To ? @relation("_To", fields: [], references: [])
 @@map("جدول_الكتب")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الكلية Int @id @map("معرف_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الكلية String? @map("اسم_الكلية")
-__To [] @relation("_To")
-__To [] @relation("_To")
-__To [] @relation("_To")
-__To [] @relation("_To")
-@@map("جدول_الكليات")
+model College {
+  id              Int      @id @map("معرف_الكلية")
+  name            String?  @map("اسم_الكلية")
+
+  college_departments         CollegeDepartment[]
+  higher_college_departments  HigherCollegeDepartment[]
+  employee_educations         EmployeeEducation[]
+  science_college_details     ScienceCollegeDetail[]
+  higher_science_college_details HigherScienceCollegeDetail[]
+
+  @@map("جدول_الكليات")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -507,26 +459,23 @@ __To ? @relation("_To", fields: [], references: [])
 __To ? @relation("_To", fields: [], references: [])
 @@map("جدول_المؤهلات_العلمية")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المجمع Int @id @map("معرف_المجمع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_المجمع String? @map("اسم_المجمع")
-__To [] @relation("_To")
-__To [] @relation("_To")
-__To [] @relation("_To")
-@@map("جدول_المجمع_التربوي")
+model EducationalComplex {
+  id              Int      @id @map("معرف_المجمع")
+  name            String?  @map("اسم_المجمع")
+
+  employees       Employee[]
+  schools         School[]
+  weekly_quotas   WeeklyQuota[]
+
+  @@map("جدول_المجمع_التربوي")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المعرف Int @id @default(autoincrement()) @map("المعرف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المحافظة String? @map("المحافظة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المنطقة_المدينة String? @map("المنطقة_المدينة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الناحية String? @map("الناحية")
-@@map("جدول_المحافظات_مفصل")
+model CityDetail {
+  id              Int      @id @default(autoincrement()) @map("المعرف")
+  governorate     String?  @map("المحافظة")
+  city_region     String?  @map("المنطقة_المدينة")
+  sub_district    String?  @map("الناحية")
+
+  @@map("جدول_المحافظات_مفصل")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -564,15 +513,14 @@ __To ? @relation("_To", fields: [], references: [])
 __To [] @relation("_To")
 @@map("جدول_المدارس")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المدينة Int @id @map("معرف_المدينة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المدينة String? @map("المدينة")
-__To [] @relation("_To")
-__To [] @relation("_To")
-__To [] @relation("_To")
-@@map("جدول_المدينة")
+model City {
+  id              Int      @id @map("معرف_المدينة")
+  name            String?  @map("المدينة")
+
+  employees       Employee[]
+  villages        Village[]
+
+  @@map("جدول_المدينة")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -605,16 +553,15 @@ __To [] @relation("_To")
 __To [] @relation("_To")
 @@map("جدول_المسمى_الوظيفي_الحالي")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المعهد Int @id @map("معرف_المعهد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_المعهد String? @map("اسم_المعهد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_المعهد String? @map("نوع_المعهد")
-__To [] @relation("_To")
-__To [] @relation("_To")
-@@map("جدول_المعاهد")
+model Institute {
+  id              Int      @id @map("معرف_المعهد")
+  name            String?  @map("اسم_المعهد")
+  type            String?  @map("نوع_المعهد")
+
+  departments     InstituteDepartment[]
+  higher_departments HigherInstituteDepartment[]
+
+  @@map("جدول_المعاهد")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -661,193 +608,149 @@ __To ? @relation("_To", fields: [], references: [], map: "fk_wk_qt_emp")
 __To ? @relation("_To", fields: [], references: [], map: "fk_wk_qt_sch")
 @@map("جدول_النصاب_الأسبوعي")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الفئة Int @id @map("معرف_الفئة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// النصاب_الأسبوعي Int? @map("النصاب_الأسبوعي")
-__To  @relation("_To", fields: [], references: [], map: "fk_ref_qt_jcat")
-@@map("جدول_النصاب_المرجعي")
+model ReferenceQuota {
+  id              Int      @id @map("معرف_الفئة")
+  weekly_quota    Int?     @map("النصاب_الأسبوعي")
+
+  job_category    JobCategory @relation(fields: [id], references: [id], map: "fk_ref_qt_jcat")
+
+  @@map("جدول_النصاب_المرجعي")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الوزارة Int @id @default(autoincrement()) @map("معرف_الوزارة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الوزارة String? @map("اسم_الوزارة")
-@@map("جدول_الوزارات")
+model Ministry {
+  id              Int      @id @default(autoincrement()) @map("معرف_الوزارة")
+  name            String?  @map("اسم_الوزارة")
+
+  @@map("جدول_الوزارات")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الوضع_العائلي Int @id @map("معرف_الوضع_العائلي")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الوضع_العائلي String? @map("الوضع_العائلي")
-__To [] @relation("_To")
-@@map("جدول_الوضع_العائلي")
+model MaritalStatus {
+  id              Int      @id @map("معرف_الوضع_العائلي")
+  name            String?  @map("الوضع_العائلي")
+
+  employees       Employee[]
+
+  @@map("جدول_الوضع_العائلي")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الإجراء Int @id @default(autoincrement()) @map("معرف_الإجراء")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الموظف Int? @map("معرف_الموظف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_الاجراء String? @map("نوع_الاجراء")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رقم_القرار String? @map("رقم_القرار")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_القرار DateTime? @map("تاريخ_القرار")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_الانفكاك DateTime? @map("تاريخ_الانفكاك")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// النقل_إلى String? @map("النقل_إلى")
-__To ? @relation("_To", fields: [], references: [])
-@@map("جدول_ترك_العمل")
+model Termination {
+  id              Int       @id @default(autoincrement()) @map("معرف_الإجراء")
+  employee_id     Int?      @map("معرف_الموظف")
+  action_type     String?   @map("نوع_الاجراء")
+  decision_num    String?   @map("رقم_القرار")
+  decision_date   DateTime? @map("تاريخ_القرار")
+  termination_date DateTime? @map("تاريخ_الانفكاك")
+  transfer_to     String?   @map("النقل_إلى")
+
+  employee        Employee? @relation(fields: [employee_id], references: [id])
+
+  @@map("جدول_ترك_العمل")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_التصنيف Int @id @default(autoincrement()) @map("معرف_التصنيف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_التصنيف String @map("اسم_التصنيف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الوصف String? @map("الوصف")
-__To [] @relation("_To")
-@@map("جدول_تصنيفات_المكتبة")
+model LibraryCategory {
+  id              Int      @id @default(autoincrement()) @map("معرف_التصنيف")
+  name            String   @map("اسم_التصنيف")
+  description     String?  @map("الوصف")
+
+  books           Book[]
+
+  @@map("جدول_تصنيفات_المكتبة")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_تعديل_الفئة Int @id @default(autoincrement()) @map("معرف_تعديل_الفئة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الموظف Int @map("معرف_الموظف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رقم_قرار_تعديل_الفئة String? @map("رقم_قرار_تعديل_الفئة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_قرار_تعديل_الفئة DateTime? @map("تاريخ_قرار_تعديل_الفئة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الفئة_الوظيفية_الحالية String? @map("الفئة_الوظيفية_الحالية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الفئة_الوظيفية_الجديدة Int? @map("الفئة_الوظيفية_الجديدة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المسمى_الوظيفي_الجديد Int? @map("المسمى_الوظيفي_الجديد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تم_بواسطة String? @map("تم_بواسطة")
-__To ? @relation("_To", fields: [], references: [])
-__To ? @relation("_To", fields: [], references: [])
-__To  @relation("_To", fields: [], references: [])
-@@map("جدول_تعديل_الفئة")
+model CategoryModification {
+  id                     Int       @id @default(autoincrement()) @map("معرف_تعديل_الفئة")
+  employee_id            Int       @map("معرف_الموظف")
+  decision_num           String?   @map("رقم_قرار_تعديل_الفئة")
+  decision_date          DateTime? @map("تاريخ_قرار_تعديل_الفئة")
+  current_category_name  String?   @map("الفئة_الوظيفية_الحالية")
+  new_category_id        Int?      @map("الفئة_الوظيفية_الجديدة")
+  new_job_title_id       Int?      @map("المسمى_الوظيفي_الجديد")
+  created_by             String?   @map("تم_بواسطة")
+
+  new_category           JobCategory? @relation(fields: [new_category_id], references: [id])
+  employee               Employee     @relation(fields: [employee_id], references: [id])
+
+  @@map("جدول_تعديل_الفئة")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_السجل Int @id @default(autoincrement()) @map("معرف_السجل")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المستخدم Int? @map("معرف_المستخدم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// العملية String @map("العملية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// المورد String @map("المورد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المورد String? @map("معرف_المورد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// التفاصيل Json? @map("التفاصيل")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_العملية DateTime @default(now()) @map("تاريخ_العملية")
-__To ? @relation("_To", fields: [], references: [])
-@@map("جدول_سجل_التدقيق")
+model AuditLog {
+  id              Int      @id @default(autoincrement()) @map("معرف_السجل")
+  user_id         Int?     @map("معرف_المستخدم")
+  action          String   @map("العملية")
+  resource        String   @map("المورد")
+  resource_id     String?  @map("معرف_المورد")
+  details         Json?    @map("التفاصيل")
+  created_at      DateTime @default(now()) @map("تاريخ_العملية")
+
+  @@map("جدول_سجل_التدقيق")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_سجل_الراتب Int @id @default(autoincrement()) @map("معرف_سجل_الراتب")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الموظف Int @map("معرف_الموظف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الشهر Int @map("الشهر")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// السنة Int @map("السنة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الراتب_الأساسي Float @map("الراتب_الأساسي")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// التعويضات Float @default(0) @map("التعويضات")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الاقتطاعات Float @default(0) @map("الاقتطاعات")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الصافي_النهائي Float @map("الصافي_النهائي")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تم_الصرف Boolean @default(false) @map("تم_الصرف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_الإنشاء DateTime @default(now()) @map("تاريخ_الإنشاء")
-__To  @relation("_To", fields: [], references: [])
-@@map("جدول_سجلات_الرواتب")
+model SalaryRecord {
+  id               Int      @id @default(autoincrement()) @map("معرف_سجل_الراتب")
+  employee_id      Int      @map("معرف_الموظف")
+  month            Int      @map("الشهر")
+  year             Int      @map("السنة")
+  base_salary      Float    @map("الراتب_الأساسي")
+  allowances       Float    @default(0) @map("التعويضات")
+  deductions       Float    @default(0) @map("الاقتطاعات")
+  net_salary       Float    @map("الصافي_النهائي")
+  is_payout        Boolean  @default(false) @map("تم_الصرف")
+  created_at       DateTime @default(now()) @map("تاريخ_الإنشاء")
+
+  employee         Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("جدول_سجلات_الرواتب")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_السقف Int @id @default(autoincrement()) @map("معرف_السقف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// السقف Float @map("السقف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الفئة_الوظيفية Int? @map("معرف_الفئة_الوظيفية")
-__To [] @relation("_To")
-__To ? @relation("_To", fields: [], references: [])
-@@map("جدول_سقف_الأجر")
+model SalaryCeiling {
+  id              Int      @id @default(autoincrement()) @map("معرف_السقف")
+  ceiling         Float    @map("السقف")
+  job_category_id Int?     @map("معرف_الفئة_الوظيفية")
+
+  job_category    JobCategory? @relation(fields: [job_category_id], references: [id])
+  starting_salaries StartingSalary[]
+
+  @@map("جدول_سقف_الأجر")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_فروع_الثانوية Int @id @default(autoincrement()) @map("معرف_فروع_الثانوية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الفرع String? @map("اسم_الفرع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الثانوية Int? @map("معرف_الثانوية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الثانوية String? @map("اسم_الثانوية")
-__To ? @relation("_To", fields: [], references: [], map: "fk_hi_sch_br_hs")
-@@map("جدول_فروع_الثانوية")
+model HighSchoolBranch {
+  id              Int      @id @default(autoincrement()) @map("معرف_فروع_الثانوية")
+  name            String?  @map("اسم_الفرع")
+  high_school_id  Int?     @map("معرف_الثانوية")
+  high_school_name String? @map("اسم_الثانوية")
+
+  high_school     HighSchool? @relation(fields: [high_school_id], references: [id], map: "fk_hi_sch_br_hs")
+
+  @@map("جدول_فروع_الثانوية")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_المستند Int @id @default(autoincrement()) @map("معرف_المستند")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الموظف Int @map("معرف_الموظف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// عنوان_المستند String @map("عنوان_المستند")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_المستند String @map("نوع_المستند")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// رابط_الملف String @map("رابط_الملف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_الرفع DateTime @default(now()) @map("تاريخ_الرفع")
-__To  @relation("_To", fields: [], references: [])
-@@map("جدول_مستندات_الموظف")
+model EmployeeDocument {
+  id              Int      @id @default(autoincrement()) @map("معرف_المستند")
+  employee_id     Int      @map("معرف_الموظف")
+  title           String   @map("عنوان_المستند")
+  type            String   @map("نوع_المستند")
+  file_url        String   @map("رابط_الملف")
+  uploaded_at     DateTime @default(now()) @map("تاريخ_الرفع")
+
+  employee        Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("جدول_مستندات_الموظف")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الفرع Int @id @default(autoincrement()) @map("معرف_الفرع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الفرع String? @map("اسم_الفرع")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_القسم Int? @map("معرف_القسم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_القسم String? @map("اسم_القسم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الكلية Int? @map("معرف_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الكلية String? @map("اسم_الكلية")
-__To ? @relation("_To", fields: [], references: [], map: "fk_sci_col_col")
-__To ? @relation("_To", fields: [], references: [], map: "fk_sci_col_dep")
-@@map("جدول_مفصل_كلية_العلوم")
+model ScienceCollegeDetail {
+  id              Int      @id @default(autoincrement()) @map("معرف_الفرع")
+  name            String?  @map("اسم_الفرع")
+  department_id   Int?     @map("معرف_القسم")
+  department_name String?  @map("اسم_القسم")
+  college_id      Int?     @map("معرف_الكلية")
+  college_name    String?  @map("اسم_الكلية")
+
+  college         College? @relation(fields: [college_id], references: [id], map: "fk_sci_col_col")
+  department      CollegeDepartment? @relation(fields: [department_id], references: [id], map: "fk_sci_col_dep")
+
+  @@map("جدول_مفصل_كلية_العلوم")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الفرع_للشهادة_الأعلى Int @id @default(autoincrement()) @map("معرف_الفرع_للشهادة_الأعلى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الفرع_للشهادة_الأعلى String? @map("اسم_الفرع_للشهادة_الأعلى")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_القسم Int? @map("معرف_القسم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_القسم String? @map("اسم_القسم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_الكلية Int? @map("معرف_الكلية")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_الكلية String? @map("اسم_الكلية")
-__To ? @relation("_To", fields: [], references: [], map: "fk_hsci_col_col")
-__To ? @relation("_To", fields: [], references: [], map: "fk_hsci_col_dep")
-@@map("جدول_مفصل_كلية_العلوم_للشهادة_الأع")
+model HigherScienceCollegeDetail {
+  id              Int      @id @default(autoincrement()) @map("معرف_الفرع_للشهادة_الأعلى")
+  name            String?  @map("اسم_الفرع_للشهادة_الأعلى")
+  department_id   Int?     @map("معرف_القسم")
+  department_name String?  @map("اسم_القسم")
+  college_id      Int?     @map("معرف_الكلية")
+  college_name    String?  @map("اسم_الكلية")
+
+  college         College? @relation(fields: [college_id], references: [id], map: "fk_hsci_col_col")
+  department      HigherCollegeDepartment? @relation(fields: [department_id], references: [id], map: "fk_hsci_col_dep")
+
+  @@map("جدول_مفصل_كلية_العلوم_للشهادة_الأع")
 }
 model  {
 /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
@@ -875,81 +778,59 @@ model  {
 __To ? @relation("_To", fields: [], references: [])
 @@map("جدول_ندب_إيفاد_إعارة")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_نوع_التعيين Int @id @map("معرف_نوع_التعيين")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_التعيين String? @map("نوع_التعيين")
-__To [] @relation("_To")
-@@map("جدول_نوع_التعيين")
+model AppointmentType {
+  id              Int      @id @map("معرف_نوع_التعيين")
+  name            String?  @map("نوع_التعيين")
+
+  employees       Employee[]
+
+  @@map("جدول_نوع_التعيين")
 }
-model  {
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_نوع_الشهادة Int @id @map("معرف_نوع_الشهادة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_الشهادة String? @map("نوع_الشهادة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الفئة_الوظيفية String? @map("الفئة_الوظيفية")
-__To [] @relation("_To")
-@@map("جدول_نوع_الشهادة")
+model CertificateType {
+  id              Int      @id @map("معرف_نوع_الشهادة")
+  name            String?  @map("نوع_الشهادة")
+  job_category    String?  @map("الفئة_الوظيفية")
+
+  employee_educations EmployeeEducation[]
+
+  @@map("جدول_نوع_الشهادة")
 }
-model  {
-id Int @id @default(autoincrement())
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معرف_النموذج Int @map("معرف_النموذج")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// اسم_العمود_برمجيا String @map("اسم_العمود_برمجيا")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_البيانات String @map("نوع_البيانات")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الاسم_المعروض String @map("الاسم_المعروض")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نوع_حقل_الواجهة String @default("text") @map("نوع_حقل_الواجهة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الخيارات String? @map("الخيارات")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// إجباري Boolean @default(false) @map("إجباري")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// نص_مساعد String? @map("نص_مساعد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// ترتيب Int @default(0) @map("ترتيب")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// قيمة_الاعتماد String? @map("قيمة_الاعتماد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// معامل_الاعتماد String? @default("equals") @map("معامل_الاعتماد")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// يعتمد_على_حقل String? @map("يعتمد_على_حقل")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الجواب_الصحيح String? @map("الجواب_الصحيح")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// النقاط Int? @default(0) @map("النقاط")
-__To  @relation("_To", fields: [], references: [id], onDelete: Cascade)
-@@map("حقول_نماذج_مخصصة")
+model CustomFormField {
+  id                  Int      @id @default(autoincrement())
+  form_id             Int      @map("معرف_النموذج")
+  column_name         String   @map("اسم_العمود_برمجيا")
+  data_type           String   @map("نوع_البيانات")
+  display_name        String   @map("الاسم_المعروض")
+  ui_field_type       String   @default("text") @map("نوع_حقل_الواجهة")
+  options             String?  @map("الخيارات")
+  is_required         Boolean  @default(false) @map("إجباري")
+  helper_text         String?  @map("نص_مساعد")
+  order               Int      @default(0) @map("ترتيب")
+  dependency_value    String?  @map("قيمة_الاعتماد")
+  dependency_operator String?  @default("equals") @map("معامل_الاعتماد")
+  depends_on_field    String?  @map("يعتمد_على_حقل")
+  correct_answer      String?  @map("الجواب_الصحيح")
+  points              Int?     @default(0) @map("النقاط")
+
+  form                CustomForm @relation(fields: [form_id], references: [id], onDelete: Cascade)
+
+  @@map("حقول_نماذج_مخصصة")
 }
-model  {
-id Int @id @default(autoincrement())
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// العنوان String @map("العنوان")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الوصف String? @map("الوصف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الرابط_الدائم String @unique @map("الرابط_الدائم")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الجدول_الهدف String @map("الجدول_الهدف")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// الأدوار_المسموحة String? @map("الأدوار_المسموحة")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// فعال Boolean @default(true) @map("فعال")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_الإنشاء DateTime @default(now()) @map("تاريخ_الإنشاء")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// تاريخ_التحديث DateTime @map("تاريخ_التحديث")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// هل_اختبار Boolean @default(false) @map("هل_اختبار")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// لون_الأزرار String @default("#9333ea") @map("لون_الأزرار")
-/// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-// لون_الترويسة String @default("#9333ea") @map("لون_الترويسة")
-__To [] @relation("_To")
-@@map("نماذج_مخصصة")
+model CustomForm {
+  id              Int      @id @default(autoincrement())
+  title           String   @map("العنوان")
+  description     String?  @map("الوصف")
+  slug            String   @unique @map("الرابط_الدائم")
+  target_table    String   @map("الجدول_الهدف")
+  allowed_roles   String?  @map("الأدوار_المسموحة")
+  is_active       Boolean  @default(true) @map("فعال")
+  created_at      DateTime @default(now()) @map("تاريخ_الإنشاء")
+  updated_at      DateTime @updatedAt @map("تاريخ_التحديث")
+  is_quiz         Boolean  @default(false) @map("هل_اختبار")
+  button_color    String   @default("#9333ea") @map("لون_الأزرار")
+  header_color    String   @default("#9333ea") @map("لون_الترويسة")
+
+  fields          CustomFormField[]
+
+  @@map("نماذج_مخصصة")
 }

@@ -20,7 +20,7 @@ export default async function AdminBooksPage(props: { searchParams: Promise<{ q?
             category: true,
         },
         orderBy: {
-            created_at: 'desc'
+            uploaded_at: 'desc'
         }
     });
 

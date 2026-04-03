@@ -19,7 +19,7 @@ export default async function LibraryPage({ searchParams }: { searchParams: { q?
     const books = await prisma.book.findMany({
         where,
         include: { category: true },
-        orderBy: { created_at: 'desc' },
+        orderBy: { uploaded_at: 'desc' },
     });
 
     const categories = await prisma.libraryCategory.findMany();

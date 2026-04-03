@@ -12,10 +12,10 @@ export default async function EditEmployeePage(props: { params: Promise<{ id: st
     const employee = await prisma.employee.findUnique({
         where: { id },
         include: {
-            vacations: true,
-            movements: true,
+            leave_requests: true,
+            transfers: true,
             promotions: true,
-            education_history: true
+            educations: true
         }
     });
     if (!employee) notFound();

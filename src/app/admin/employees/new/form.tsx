@@ -39,8 +39,8 @@ type Props = {
     certificateTypes: any[];
     assignedWorks: any[];
     initialData?: any & {
-        vacations?: any[];
-        movements?: any[];
+        leave_requests?: any[];
+        transfers?: any[];
         promotions?: any[];
     }; // For edit mode
 };
@@ -477,10 +477,10 @@ export default function EmployeeForm({
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-100">
-                                            {initialData.vacations?.length > 0 ? (
-                                                initialData.vacations.map((v: any) => (
+                                            {initialData.leave_requests?.length > 0 ? (
+                                                initialData.leave_requests.map((v: any) => (
                                                     <tr key={v.id} className="hover:bg-gray-50/50 transition">
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{v.type}</td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{v.leave_type}</td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{v.duration} يوم</td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{v.start_date ? new Date(v.start_date).toLocaleDateString('ar-SY') : '-'}</td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{v.end_date ? new Date(v.end_date).toLocaleDateString('ar-SY') : '-'}</td>
@@ -515,13 +515,13 @@ export default function EmployeeForm({
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-100">
-                                            {initialData.movements?.length > 0 ? (
-                                                initialData.movements.map((m: any) => (
+                                            {initialData.transfers?.length > 0 ? (
+                                                initialData.transfers.map((m: any) => (
                                                     <tr key={m.id} className="hover:bg-gray-50/50 transition">
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{m.type}</td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{m.destination}</td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{m.action_type}</td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{m.entity}</td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{m.decision_num}</td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{m.resumption_date ? new Date(m.resumption_date).toLocaleDateString('ar-SY') : '-'}</td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{m.start_date ? new Date(m.start_date).toLocaleDateString('ar-SY') : '-'}</td>
                                                     </tr>
                                                 ))
                                             ) : (

@@ -8,39 +8,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model meta_fields {
-  id          Int         @id @default(autoincrement())
+model MetaField {
+  id          Int       @id @default(autoincrement())
   tableId     Int
   name        String
   label       String
   type        String
-  isRequired  Boolean     @default(false)
-  createdAt   DateTime    @default(now())
-  inputType   String      @default("text")
+  isRequired  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  inputType   String    @default("text")
   options     String?
-  meta_tables meta_tables @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  metaTable   MetaTable @relation(fields: [tableId], references: [id], onDelete: Cascade)
+
+  @@map("meta_fields")
 }
 
-model meta_relations {
-  id          Int         @id @default(autoincrement())
+model MetaRelation {
+  id          Int       @id @default(autoincrement())
   tableId     Int
   targetModel String
   targetLabel String
   foreignKey  String
-  createdAt   DateTime    @default(now())
-  meta_tables meta_tables @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  metaTable   MetaTable @relation(fields: [tableId], references: [id], onDelete: Cascade)
+
+  @@map("meta_relations")
 }
 
-model meta_tables {
-  id             Int              @id @default(autoincrement())
-  name           String           @unique
-  slug           String           @unique
+model MetaTable {
+  id             Int            @id @default(autoincrement())
+  name           String         @unique
+  slug           String         @unique
   title          String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime
-  isSystem       Boolean          @default(false)
-  meta_fields    meta_fields[]
-  meta_relations meta_relations[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  isSystem       Boolean        @default(false)
+  
+  fields         MetaField[]
+  relations      MetaRelation[]
+
+  @@map("meta_tables")
 }
 
 model t_dynamic_table {

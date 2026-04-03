@@ -7,7 +7,7 @@ import { createAuditLog } from '@/services/audit-service';
 
 export async function addDocument(employeeId: number, formData: FormData) {
     const title = formData.get('title') as string;
-    const category = formData.get('file_type') as string; // in schema it's 'category'
+    const category = formData.get('file_type') as string; // in schema it's 'type'
     const file_url = formData.get('file_url') as string;
 
     if (!title || !category || !file_url) {
@@ -18,7 +18,7 @@ export async function addDocument(employeeId: number, formData: FormData) {
         data: {
             employee_id: employeeId,
             title,
-            category,
+            type: category,
             file_url,
         }
     });

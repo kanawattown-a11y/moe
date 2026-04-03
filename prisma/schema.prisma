@@ -54,6 +54,8 @@ model StartingSalary {
   job_category_id Int?     @map("معرف_الفئة_الوظيفية")
   ceiling_id      Int?     @map("معرف_السقف")
 
+  ceiling         SalaryCeiling? @relation(fields: [ceiling_id], references: [id])
+
   @@map("جدول_أجر_بدء_التعيين")
 }
 model CollegeDepartment {
@@ -208,6 +210,8 @@ model Department {
   stat_number     String?  @map("الرقم_الاحصائي")
   name            String?  @map("اسم_الدائرة")
 
+  sections        Section[]
+
   @@map("جدول_الدوائر")
 }
 model Employee {
@@ -247,7 +251,9 @@ model Employee {
   nature_of_work_allowance   Float?    @default(0)
   other_deductions           Float?    @default(0)
 
-  school                     School?              @relation(fields: [school_id], references: [id])
+  school                     School?              @relation("SchoolEmployees", fields: [school_id], references: [id])
+  managed_schools            School[]             @relation("SchoolManager")
+  leave_requests             LeaveRequest[]
   complex                    EducationalComplex?  @relation(fields: [complex_id], references: [id])
   appointment_type           AppointmentType?     @relation(fields: [appointment_type_id], references: [id])
   job_category               JobCategory?         @relation(fields: [job_category_id], references: [id])
@@ -416,8 +422,11 @@ model School {
   notes           String?  @map("ملاحظات")
 
   village         Village? @relation(fields: [village_id], references: [id])
-  manager         Employee? @relation(fields: [manager_id], references: [id])
+  manager         Employee? @relation("SchoolManager", fields: [manager_id], references: [id])
   complex         EducationalComplex? @relation(fields: [complex_id], references: [id])
+
+  employees       Employee[] @relation("SchoolEmployees")
+  weekly_quotas   WeeklyQuota[]
 
   @@map("جدول_المدارس")
 }

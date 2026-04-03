@@ -153,7 +153,7 @@ export async function createArticle(formData: FormData) {
 
     const slug = title.trim().replace(/\s+/g, '-') + '-' + Date.now();
 
-    const article = await prisma.article.create({
+    const article = await prisma.news.create({
         data: {
             title,
             content,
@@ -192,8 +192,8 @@ export async function createBook(formData: FormData) {
     const book = await prisma.book.create({
         data: {
             title,
-            author_name: authorName,
-            description,
+            author: authorName,
+            summary: description,
             file_url: fileUrl,
             cover_url: coverUrl,
             category_id: categoryId,

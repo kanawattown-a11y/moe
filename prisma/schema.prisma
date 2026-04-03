@@ -206,9 +206,11 @@ model University {
 
   @@map("جدول_الجامعات")
 }
-model Status {
+model WorkStatus {
   id              Int      @id @map("معرف_الحالة")
   name            String?  @map("الحالة")
+
+  employees       Employee[]
 
   @@map("جدول_الحالة")
 }
@@ -233,6 +235,9 @@ model Employee {
   appt_job_title_id          Int?      @map("معرف_المسمى_الوظيفي_عند_التعيين")
   curr_job_title_id          Int?      @map("معرف_المسمى_الوظيفي_الحالي")
   status_id                  Int?      @map("معرف_الحالة")
+  
+  work_status                WorkStatus?           @relation(fields: [status_id], references: [id])
+
   first_name                 String?   @map("الاسم")
   father_name                String?   @map("اسم_الأب")
   last_name                  String?   @map("النسبة")
@@ -279,6 +284,10 @@ model Employee {
   staffing                   Staffing[]
   weekly_quotas              WeeklyQuota[]
   transfers                  TransferOrLoan[]
+  
+  job_title_appointment      JobTitle?            @relation("ApptJobTitle", fields: [appt_job_title_id], references: [id])
+  job_title_current          JobTitle?            @relation("CurrJobTitle", fields: [curr_job_title_id], references: [id])
+
   @@map("جدول_الذاتيات")
 }
 model BridgeTable {
@@ -460,9 +469,13 @@ model User {
 
   @@map("جدول_المستخدمين")
 }
-model CurrentJobTitle {
+model JobTitle {
   id              Int      @id @map("معرف_المسمى_الوظيفي_الحالي")
-  title           String?  @map("المسمى_الوظيفي_الحالي")
+  name            String?  @map("المسمى_الوظيفي_الحالي")
+
+  employees_appointment Employee[] @relation("ApptJobTitle")
+  employees_current     Employee[] @relation("CurrJobTitle")
+  category_modifications CategoryModification[]
 
   @@map("جدول_المسمى_الوظيفي_الحالي")
 }
@@ -565,6 +578,7 @@ model CategoryModification {
   created_by             String?   @map("تم_بواسطة")
 
   new_category           JobCategory? @relation(fields: [new_category_id], references: [id])
+  new_job_title          JobTitle?    @relation(fields: [new_job_title_id], references: [id])
   employee               Employee     @relation(fields: [employee_id], references: [id])
 
   @@map("جدول_تعديل_الفئة")

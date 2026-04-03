@@ -16,24 +16,24 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
             job_title_at_appt: true,
             appointment_type: true,
             job_category: true,
-            status: true,
+            work_status: true,
             marital_status: true,
             city: true,
             village: true,
             complex: true,
-            education_history: {
+            educations: {
                 include: {
                     certificate_type: true
                 }
             },
-            vacations: true,
-            movements: true,
+            leave_requests: true,
+            transfers: true,
             promotions: true,
             terminations: true,
             position_staffings: true,
             category_modifications: {
                 include: {
-                    new_job_category: true,
+                    new_category: true,
                     new_job_title: true,
                 }
             },
@@ -113,7 +113,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                             <InfoItem label="المسمى الوظيفي" value={employee.job_title_current?.name} />
                             <InfoItem label="المجمع التربوي" value={employee.complex?.name} />
 
-                            <InfoItem label="الحالة" value={employee.status?.name} />
+                            <InfoItem label="الحالة" value={employee.work_status?.name} />
                             <InfoItem label="العنوان" value={`${employee.city?.name || ''} - ${employee.village?.name || ''} - ${employee.suwayda_full_address || ''}`} fullWidth />
                         </dl>
                     </div>
@@ -172,8 +172,8 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
                                 {/* @ts-ignore - types are being generated */}
-                                {employee.education_history && employee.education_history.length > 0 ? (
-                                    employee.education_history.map((edu: any) => (
+                                {employee.educations && employee.educations.length > 0 ? (
+                                    employee.educations.map((edu: any) => (
                                         <tr key={edu.id} className="hover:bg-gray-50/50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
                                                 {edu.certificate_type?.name}
@@ -185,7 +185,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                                 {edu.college_id ? `كلية ${edu.college_id}` : (edu.institute_id ? `معهد ${edu.institute_id}` : '-')}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500">
-                                                {edu.graduation_year || '-'}
+                                                {edu.grad_year || '-'}
                                             </td>
                                         </tr>
                                     ))
@@ -276,11 +276,11 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
-                                {employee.vacations && employee.vacations.length > 0 ? (
-                                    employee.vacations.map((vac: any) => (
+                                {employee.leave_requests && employee.leave_requests.length > 0 ? (
+                                    employee.leave_requests.map((vac: any) => (
                                         <tr key={vac.id} className="hover:bg-gray-50/50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                                {vac.type}
+                                                {vac.leave_type}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                                 {vac.decision_num}
@@ -331,23 +331,23 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
-                                {employee.movements && employee.movements.length > 0 ? (
-                                    employee.movements.map((move: any) => (
+                                {employee.transfers && employee.transfers.length > 0 ? (
+                                    employee.transfers.map((move: any) => (
                                         <tr key={move.id} className="hover:bg-gray-50/50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                                {move.type}
+                                                {move.action_type}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                {move.destination}
+                                                {move.entity}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                                 {move.decision_num}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {move.leave_date ? new Date(move.leave_date).toLocaleDateString('ar-SY') : '-'}
+                                                {move.start_date ? new Date(move.start_date).toLocaleDateString('ar-SY') : '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {move.resumption_date ? new Date(move.resumption_date).toLocaleDateString('ar-SY') : '-'}
+                                                {move.return_date ? new Date(move.return_date).toLocaleDateString('ar-SY') : '-'}
                                             </td>
                                         </tr>
                                     ))
@@ -450,7 +450,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                                 {mod.current_job_category || '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-indigo-600">
-                                                {mod.new_job_category?.name || '-'}
+                                                {mod.new_category?.name || '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
                                                 {mod.new_job_title?.name || '-'}

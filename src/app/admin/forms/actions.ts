@@ -3,8 +3,14 @@
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { checkAuth, hasPermission } from '@/lib/auth-utils';
 
 export async function createForm(prevState: any, formData: FormData) {
+    const session = await checkAuth();
+    if (!hasPermission(session, '/admin/forms')) {
+        return { message: 'ليس لديك صلاحية لإنشاء النماذج.' };
+    }
+    
     const title = formData.get('title') as string;
     const slug = formData.get('slug') as string;
     const target_table = formData.get('target_table') as string;
@@ -41,6 +47,11 @@ export async function createForm(prevState: any, formData: FormData) {
 }
 
 export async function deleteForm(id: number) {
+    const session = await checkAuth();
+    if (!hasPermission(session, '/admin/forms')) {
+        return { message: 'ليس لديك صلاحية لحذف النماذج.' };
+    }
+
     try {
         await prisma.customForm.delete({ where: { id } });
         revalidatePath('/admin/forms');

@@ -1,12 +1,19 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { FileText, Plus, ExternalLink, PenTool, Trash2 } from 'lucide-react';
-import { deleteForm } from './actions';
+import { checkAuth, hasPermission, isManager } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
 import DeleteFormButton from './components/DeleteFormButton';
 
 export const dynamic = 'force-dynamic';
 
 export default async function CustomFormsPage() {
+    const session = await checkAuth();
+    if (!hasPermission(session, '/admin/forms')) {
+        redirect('/admin?error=Unauthorized');
+    }
+    const isUserAManager = isManager(session);
+
     const forms = await prisma.customForm.findMany({
         orderBy: {
             created_at: 'desc'

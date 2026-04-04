@@ -1,9 +1,14 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { Plane, Plus, CalendarOff } from 'lucide-react';
+import { checkAuth, getAccessFilter, isManager } from '@/lib/auth-utils';
 
 export default async function VacationsPage() {
+    const session = await checkAuth();
+    const accessFilter = getAccessFilter(session);
+
     const vacations = await prisma.leaveRequest.findMany({
+        where: accessFilter,
         include: {
             employee: true,
         },
@@ -12,6 +17,8 @@ export default async function VacationsPage() {
         }
     });
 
+    const isUserAManager = isManager(session);
+
     return (
         <div className="p-6 md:p-10 font-cairo bg-gray-50/30 min-h-screen" dir="rtl">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
@@ -19,10 +26,12 @@ export default async function VacationsPage() {
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">إدارة الإجازات</h1>
                     <p className="text-gray-500 mt-2">سجل إجازات الموظفين (صحية، إدارية، أمومة...)</p>
                 </div>
-                <Link href="/admin/vacations/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
-                    <Plus size={20} />
-                    <span>إضافة إجازة جديدة</span>
-                </Link>
+                {isUserAManager && (
+                    <Link href="/admin/vacations/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
+                        <Plus size={20} />
+                        <span>إضافة إجازة جديدة</span>
+                    </Link>
+                )}
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">

@@ -24,7 +24,12 @@ async function getUsers(query: string) {
     });
 }
 
+import { checkAuth, hasPermission } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
+
 export default async function UsersPage(props: { searchParams: Promise<{ q?: string }> }) {
+    const session = await checkAuth(['ADMIN']); // Strict ADMIN only
+    
     const searchParams = await props.searchParams;
     const query = searchParams.q || '';
     const users = await getUsers(query);

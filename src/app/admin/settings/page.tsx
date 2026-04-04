@@ -73,7 +73,12 @@ const settingsGroups = [
     }
 ];
 
+import { checkAuth } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
+
 export default async function SettingsDashboard() {
+    await checkAuth(['ADMIN']); // STRICT ROLE CHECK
+
     // 1. Fetch tables built via the No-Code Engine
     const { prisma } = await import('@/lib/prisma');
     const dynamicTables = await prisma.metaTable.findMany();

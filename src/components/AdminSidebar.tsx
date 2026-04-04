@@ -106,8 +106,34 @@ export default function AdminSidebar() {
                 {/* Navigation */}
                 <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
                     {navItems.map((item) => {
-                        if (userRole !== 'ADMIN' && item.href !== '/admin') {
-                            if (!Array.isArray(userPermissions) || !userPermissions.includes(item.href)) return null;
+                        const isManager = userRole === 'ADMIN' || userRole === 'EMPLOYEE';
+                        const isTeacher = userRole === 'TEACHER' || userRole === 'USER';
+                        const hasCustomPerm = Array.isArray(userPermissions) && userPermissions.includes(item.href);
+                        
+                        // Hard Access Control
+                        const adminOnly = ['/admin/users', '/admin/settings', '/admin/audit-logs', '/admin/forms', '/admin/approvals'];
+                        const managerModules = [...adminOnly, '/admin/employees', '/admin/schools', '/admin/news', '/admin/terminations'];
+                        
+                        if (userRole === 'ADMIN') {
+                            // Sees everything
+                        } else if (userRole === 'EMPLOYEE') {
+                            // Manager-lite: Sees most things except sensitive admin tools unless permitted
+                            if (adminOnly.includes(item.href) && !hasCustomPerm) return null;
+                        } else {
+                            // Teacher: Only sees Self-Service modules
+                            const selfService = ['/admin', '/admin/employees', '/admin/vacations', '/admin/promotions', '/admin/movements', '/admin/payroll', '/admin/notifications', '/admin/books'];
+                            if (!selfService.includes(item.href)) return null;
+                        }
+
+                        // Localized labels for Teachers
+                        let label = item.name;
+                        if (isTeacher) {
+                            if (item.href === '/admin/employees') label = 'بياناتي الوظيفية';
+                            if (item.href === '/admin/vacations') label = 'إجازاتي';
+                            if (item.href === '/admin/promotions') label = 'ترفيعاتي';
+                            if (item.href === '/admin/movements') label = 'الندب والإيفاد';
+                            if (item.href === '/admin/payroll') label = 'راتبي الشهري';
+                            if (item.href === '/admin/books') label = 'المكتبة الرقمية';
                         }
 
                         const Icon = item.icon;
@@ -126,7 +152,7 @@ export default function AdminSidebar() {
                                 )}
                             >
                                 <Icon size={20} className={clsx("transition-transform duration-200", isActive ? "" : "group-hover:scale-110")} />
-                                <span>{item.name}</span>
+                                <span>{label}</span>
                             </Link>
                         );
                     })}

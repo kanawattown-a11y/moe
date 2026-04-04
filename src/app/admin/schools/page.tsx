@@ -4,6 +4,8 @@ import DeleteSchoolButton from './delete-button';
 import { School, Search, Plus } from 'lucide-react';
 
 import SearchBar from '../employees/SearchBar';
+import { checkAuth, hasPermission, isManager } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
 
 async function getSchools(query: string) {
     const where: any = {};
@@ -29,6 +31,12 @@ async function getSchools(query: string) {
 }
 
 export default async function AdminSchoolsPage(props: { searchParams: Promise<{ q?: string }> }) {
+    const session = await checkAuth();
+    if (!hasPermission(session, '/admin/schools')) {
+        redirect('/admin?error=Unauthorized');
+    }
+    const isUserAManager = isManager(session);
+
     const searchParams = await props.searchParams;
     const query = searchParams.q || '';
     const schools = await getSchools(query);
@@ -40,10 +48,12 @@ export default async function AdminSchoolsPage(props: { searchParams: Promise<{ 
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">إدارة المدارس والمجمعات</h1>
                     <p className="text-gray-500 mt-2">إدارة المؤسسات التعليمية والملاكات المرتبطة بها</p>
                 </div>
-                <Link href="/admin/schools/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
-                    <Plus size={20} />
-                    <span>إضافة مدرسة جديدة</span>
-                </Link>
+                {isUserAManager && (
+                    <Link href="/admin/schools/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
+                        <Plus size={20} />
+                        <span>إضافة مدرسة جديدة</span>
+                    </Link>
+                )}
             </div>
 
             {/* Fast Search Bar */}

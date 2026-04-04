@@ -5,8 +5,21 @@ import Image from 'next/image';
 import SearchBar from './SearchBar';
 import FilterBar from './FilterBar';
 import { buildEmployeeSearchQuery } from '@/lib/arabicSearch';
+import { checkAuth, getEmployeeAccessFilter, hasPermission, isManager } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
 
 export default async function EmployeesPage(props: { searchParams?: Promise<{ q?: string; school_id?: string; status_id?: string; gender?: string }> }) {
+    const session = await checkAuth();
+    
+    // Permission check for the module
+    if (!hasPermission(session, '/admin/employees')) {
+        redirect('/admin?error=Unauthorized');
+    }
+
+    const isUserAManager = isManager(session);
+    
+    // If Teacher, and they try to access the list, just show their own data
+    const accessFilter = getEmployeeAccessFilter(session);
     const searchParams = await props.searchParams;
     const q = searchParams?.q || '';
     const schoolId = searchParams?.school_id ? Number(searchParams.school_id) : undefined;
@@ -27,7 +40,7 @@ export default async function EmployeesPage(props: { searchParams?: Promise<{ q?
     const schools = rawSchools.map(s => ({ ...s, id: String(s.id) }));
     const statuses = rawStatuses.map(s => ({ ...s, id: String(s.id) }));
 
-    const where: any = {};
+    const where: any = { ...accessFilter };
     if (schoolId) where.school_id = schoolId;
     if (statusId) where.status_id = statusId;
     if (gender) where.gender = gender;
@@ -74,12 +87,14 @@ export default async function EmployeesPage(props: { searchParams?: Promise<{ q?
                             <span>الرئيسية</span>
                             <span>&larr;</span>
                         </Link>
-                        <Link
-                            href="/admin/employees/new"
-                            className="bg-accent text-primary font-bold px-6 py-2.5 rounded-lg hover:bg-accent/90 transition shadow-lg flex items-center gap-2 transform hover:scale-105"
-                        >
-                            <span>+ إضافة موظف</span>
-                        </Link>
+                        {isUserAManager && (
+                            <Link
+                                href="/admin/employees/new"
+                                className="bg-accent text-primary font-bold px-6 py-2.5 rounded-lg hover:bg-accent/90 transition shadow-lg flex items-center gap-2 transform hover:scale-105"
+                            >
+                                <span>+ إضافة موظف</span>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

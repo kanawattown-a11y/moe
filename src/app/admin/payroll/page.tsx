@@ -1,16 +1,20 @@
 import { prisma } from '@/lib/prisma';
 import PayrollClient from './PayrollClient';
-import { checkAuth } from '@/lib/auth-utils';
+import { checkAuth, getAccessFilter } from '@/lib/auth-utils';
 
 export default async function PayrollPage(props: { searchParams: Promise<{ month?: string; year?: string }> }) {
-    // await checkAuth(['ADMIN', 'FINANCE']);
+    const session = await checkAuth();
     const searchParams = await props.searchParams;
     
     const currentMonth = searchParams.month ? Number(searchParams.month) : new Date().getMonth() + 1;
     const currentYear = searchParams.year ? Number(searchParams.year) : new Date().getFullYear();
 
+    // Apply security filter
+    const accessFilter = getAccessFilter(session);
+
     const records = await (prisma as any).salaryRecord.findMany({
         where: {
+            ...accessFilter,
             month: currentMonth,
             year: currentYear
         },

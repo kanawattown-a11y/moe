@@ -1,12 +1,19 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { checkAuth, verifyOwnership } from '@/lib/auth-utils';
+import { notFound, redirect } from 'next/navigation';
 import Image from 'next/image';
 
 export default async function EmployeeDetailPage(props: { params: Promise<{ id: string }> }) {
+    const session = await checkAuth();
     const params = await props.params;
     const id = parseInt(params.id);
     if (isNaN(id)) notFound();
+
+    // SECURITY: Prevent ID scraping by non-managers
+    if (!verifyOwnership(session, id)) {
+        redirect(`/admin/employees/${session.user.employee_id}?error=AccessDenied`);
+    }
 
     const employee = await prisma.employee.findUnique({
         where: { id },

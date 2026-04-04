@@ -4,8 +4,10 @@ import { Database, PlusCircle, Play, Trash2 } from 'lucide-react';
 import { createMetaTable, deleteMetaTable, triggerSchemaApply, syncSystemTables } from './actions';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { checkAuth } from '@/lib/auth-utils';
 
 export default async function BuilderDashboard() {
+    await checkAuth(['ADMIN']); // STRICT ADMIN ONLY
     const tables = await prisma.metaTable.findMany({
         include: {
             _count: {

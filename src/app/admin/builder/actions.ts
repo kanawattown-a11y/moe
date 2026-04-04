@@ -4,10 +4,12 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { updateDynamicSchema } from './schemaService';
 import { TABLE_CONFIG } from '@/app/admin/settings/constants';
+import { checkAuth } from '@/lib/auth-utils';
 
 // --- TABLE ACTIONS ---
 
 export async function syncSystemTables() {
+    await checkAuth(['ADMIN']);
     try {
         const existingSystem = await prisma.metaTable.findMany({ where: { isSystem: true } });
         const existingSlugs = new Set(existingSystem.map((t: any) => t.slug));
@@ -33,6 +35,7 @@ export async function syncSystemTables() {
 }
 
 export async function createMetaTable(formData: FormData) {
+    await checkAuth(['ADMIN']);
     const title = formData.get('title') as string;
     const nameStr = formData.get('name') as string;
 
@@ -56,6 +59,7 @@ export async function createMetaTable(formData: FormData) {
 }
 
 export async function deleteMetaTable(id: number) {
+    await checkAuth(['ADMIN']);
     try {
         await prisma.metaTable.delete({ where: { id } });
         revalidatePath('/admin/builder');
@@ -68,6 +72,7 @@ export async function deleteMetaTable(id: number) {
 // --- FIELD ACTIONS ---
 
 export async function createMetaField(formData: FormData) {
+    await checkAuth(['ADMIN']);
     const tableId = parseInt(formData.get('tableId') as string);
     const nameStr = formData.get('name') as string;
     const label = formData.get('label') as string;
@@ -140,6 +145,7 @@ export async function deleteMetaRelation(id: number, tableId: number) {
 // --- APPLY ARCHITECTURE ---
 
 export async function triggerSchemaApply() {
+    await checkAuth(['ADMIN']);
     try {
         const result = await updateDynamicSchema();
         if (!result.success) throw new Error(result.error);

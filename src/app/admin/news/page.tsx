@@ -2,9 +2,10 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Newspaper, Plus, AlertCircle, Pencil } from 'lucide-react';
-
 import SearchBar from '../employees/SearchBar';
 import DeleteArticleButton from './components/DeleteArticleButton';
+import { checkAuth, hasPermission, isManager } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
 
 async function getArticles(query: string) {
     const where: any = {};
@@ -21,6 +22,12 @@ async function getArticles(query: string) {
 }
 
 export default async function AdminNewsPage(props: { searchParams: Promise<{ q?: string }> }) {
+    const session = await checkAuth();
+    if (!hasPermission(session, '/admin/news')) {
+        redirect('/admin?error=Unauthorized');
+    }
+    const isUserAManager = isManager(session);
+
     const searchParams = await props.searchParams;
     const query = searchParams.q || '';
     const articles = await getArticles(query);
@@ -32,10 +39,12 @@ export default async function AdminNewsPage(props: { searchParams: Promise<{ q?:
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">إدارة الأخبار</h1>
                     <p className="text-gray-500 mt-2">إضافة وتعديل وحذف الأخبار المعروضة في البوابة</p>
                 </div>
-                <Link href="/admin/news/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
-                    <Plus size={20} />
-                    <span>إضافة خبر جديد</span>
-                </Link>
+                {isUserAManager && (
+                    <Link href="/admin/news/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
+                        <Plus size={20} />
+                        <span>إضافة خبر جديد</span>
+                    </Link>
+                )}
             </div>
 
             {/* Fast Search Bar */}

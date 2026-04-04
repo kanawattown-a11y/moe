@@ -40,6 +40,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                             role: user.role || "",
                             // @ts-ignore
                             permissions: user.permissions || [],
+                            employee_id: user.linked_employee_id,
                         };
                     }
                 }

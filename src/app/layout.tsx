@@ -5,8 +5,12 @@ export const metadata: Metadata = {
   title: "نظام إدارة بيانات العاملين - وزارة التربية - جبل باشان",
   description: "نظام إدارة بيانات العاملين في المجمعات التربوية",
   icons: {
-    icon: "/logo.jpg",
-    apple: "/logo.jpg",
+    icon: [
+      { url: "/logo.jpg", type: "image/jpeg" }
+    ],
+    apple: [
+      { url: "/logo.jpg", type: "image/jpeg" }
+    ],
   },
 };
 

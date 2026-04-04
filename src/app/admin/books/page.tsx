@@ -5,6 +5,8 @@ import DeleteBookButton from './delete-button';
 
 import SearchBar from '../employees/SearchBar';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminBooksPage(props: { searchParams: Promise<{ q?: string }> }) {
     const searchParams = await props.searchParams;
     const query = searchParams.q || '';

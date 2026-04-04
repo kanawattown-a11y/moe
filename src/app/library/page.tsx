@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { BookOpen, Search, Download } from 'lucide-react';
 import SearchableSelect from '@/components/SearchableSelect';
 
+export const dynamic = 'force-dynamic';
+
 export default async function LibraryPage({ searchParams }: { searchParams: { q?: string; category?: string } }) {
     const query = searchParams.q;
     const categoryId = searchParams.category ? Number(searchParams.category) : undefined;

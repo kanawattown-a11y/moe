@@ -12,7 +12,7 @@ export default async function NotificationsPage() {
     const userId = Number(session.user.id);
     const notifications = await (prisma as any).notification.findMany({
         where: { user_id: userId },
-        orderBy: { created_at: 'desc' },
+        orderBy: { sent_at: 'desc' },
         take: 50
     });
 
@@ -33,7 +33,7 @@ export default async function NotificationsPage() {
                     ...n,
                     id: String(n.id),
                     user_id: String(n.user_id),
-                    created_at: n.created_at?.toISOString(),
+                    sent_at: n.sent_at?.toISOString(),
                 }))} />
             </div>
         </div>

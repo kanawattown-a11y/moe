@@ -50,7 +50,7 @@ export default function NotificationList({ notifications }: { notifications: any
                                 <p className={`text-sm leading-relaxed ${notif.is_read ? 'text-gray-400' : 'text-gray-600 font-medium'}`}>{notif.message}</p>
                                 <div className="flex items-center gap-2 mt-3 text-[10px] font-bold text-gray-400">
                                     <Clock size={12} />
-                                    <span>{new Date(notif.created_at).toLocaleDateString('ar-EG', { hour: '2-digit', minute: '2-digit' })}</span>
+                                    <span>{new Date(notif.sent_at).toLocaleDateString('ar-EG', { hour: '2-digit', minute: '2-digit' })}</span>
                                 </div>
                             </div>
 

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
 import { deleteForm } from '../actions';
-import { toast } from 'react-hot-toast';
 
 export default function DeleteFormButton({ id }: { id: number }) {
     const [isDeleting, setIsDeleting] = useState(false);

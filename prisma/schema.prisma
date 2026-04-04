@@ -227,6 +227,10 @@ model Employee {
   id                         Int       @id @default(autoincrement()) @map("معرف_الموظف")
   self_number                String?   @map("الرقم_الذاتي")
   job_code                   String?   @map("الرمز_الوظيفي")
+  ministerial_code           String?   @map("الرمز_الوزاري") // Added mirror
+  ministry                   String?   @map("الوزارة")      // Added mirror
+  directorate                String?   @map("المديرية")     // Added mirror
+  detailed_work              String?   @map("العمل_مفصل")   // Added mirror
   school_id                  Int?      @map("معرف_المدرسة")
   complex_id                 Int?      @map("معرف_المجمع")
   appointment_type_id        Int?      @map("معرف_نوع_التعيين")
@@ -246,6 +250,8 @@ model Employee {
   birth_place                String?   @map("محل_الولادة")
   birth_date                 DateTime? @map("تاريخ_الولادة")
   national_id                String?   @map("الرقم_الوطني")
+  national_id_numeric        String?   @map("الرقم_الوطني_رقمي") // Added mirror
+  social_security_id         String?   @map("الرقم_التأميني")     // Added mirror
   gender                     String?   @map("الجنس")
   marital_status_id          Int?      @map("معرف_الوضع_العائلي")
   children_count             Int?      @map("عدد_الابناء")
@@ -253,7 +259,14 @@ model Employee {
   city_id                    Int?      @map("معرف_المدينة")
   village_id                 Int?      @map("معرف_القرية_الحي")
   suwayda_full_address       String?   @map("العنوان_مفصل_لمركز_السويداء")
+  registry_place             String?   @map("مكان_القيد")      // Added mirror
+  registry_number            String?   @map("رقم_القيد")       // Added mirror
+  landline                   String?   @map("الهاتف_الأرضي")    // Added mirror
   mobile                     String?   @map("الموبايل")
+  mobile_international       String?   @map("الموبايل_دولي")    // Added mirror
+  accreditor_id              Int?      @map("معرف_المعتمد")     // Added mirror
+  grad_year                  String?   @map("عام_الحصول_عليها")  // Added mirror
+  higher_degree_grad_year    String?   @map("السنة_التي_أتمها") // Added mirror
   notes                      String?   @map("ملاحظات")
   full_name_triplet          String?   @map("الاسم_الثلاثي")
   is_approved                Boolean   @default(false) @map("تم_الموافقة")
@@ -288,7 +301,6 @@ model Employee {
   
   job_title_appointment      JobTitle?            @relation("ApptJobTitle", fields: [appt_job_title_id], references: [id], map: "fkey_employee_appt_job_title")
   job_title_current          JobTitle?            @relation("CurrJobTitle", fields: [curr_job_title_id], references: [id], map: "fkey_employee_curr_job_title")
-
 
   @@map("جدول_الذاتيات")
 }

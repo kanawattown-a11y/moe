@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { Prisma } from '@prisma/client';
 import { TABLE_CONFIG } from '@/app/admin/settings/constants';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CustomFormDesignerPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const form = await prisma.customForm.findUnique({

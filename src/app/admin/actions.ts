@@ -41,7 +41,7 @@ export async function createUser(prevState: any, formData: FormData) {
                 password: hashedPassword,
                 role,
                 is_active: isActive,
-                employee_id: employeeId || null,
+                linked_employee_id: employeeId || null,
                 // @ts-ignore
                 permissions: permissions.length > 0 ? permissions : null,
             },
@@ -91,7 +91,7 @@ export async function updateUser(userId: number, prevState: any, formData: FormD
     const data: any = {
         role,
         is_active: isActive,
-        employee_id: employeeId || null,
+        linked_employee_id: employeeId || null,
         // @ts-ignore
         permissions: permissions.length > 0 ? permissions : null,
     }

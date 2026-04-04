@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ArticlePage(props: { params: Promise<{ slug: string }> }) {
     const params = await props.params;
     // Decode the slug to handle Arabic characters correctly

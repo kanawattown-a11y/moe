@@ -4,8 +4,6 @@ import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
 
 import { TABLE_CONFIG } from './constants';
 
@@ -30,14 +28,10 @@ export async function createItem(tableSlug: string, prevState: any, formData: Fo
         // Extract and cast dynamic data
         for (const field of metaTable.fields) {
             const rawValue = formData.get(field.name);
-            if (field.inputType === 'file' && rawValue instanceof File && rawValue.size > 0) {
-                const bytes = await rawValue.arrayBuffer();
-                const buffer = Buffer.from(bytes);
-                const fileName = `${Date.now()}-${rawValue.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-                const uploadDir = join(process.cwd(), 'public', 'uploads');
-                try { await mkdir(uploadDir, { recursive: true }); } catch (e) { }
-                await writeFile(join(uploadDir, fileName), buffer);
-                dataPayload[field.name] = `/uploads/${fileName}`;
+            if (field.inputType === 'file') {
+                if (typeof rawValue === 'string' && rawValue.startsWith('http')) {
+                    dataPayload[field.name] = rawValue;
+                }
             } else if (field.type === 'Int') {
                 dataPayload[field.name] = rawValue ? parseInt(rawValue as string) : undefined;
             } else if (field.type === 'Boolean' || field.inputType === 'checkbox') {
@@ -70,14 +64,10 @@ export async function createItem(tableSlug: string, prevState: any, formData: Fo
         if (metaTable) {
             for (const field of metaTable.fields) {
                 const rawValue = formData.get(field.name);
-                if (field.inputType === 'file' && rawValue instanceof File && rawValue.size > 0) {
-                    const bytes = await rawValue.arrayBuffer();
-                    const buffer = Buffer.from(bytes);
-                    const fileName = `${Date.now()}-${rawValue.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-                    const uploadDir = join(process.cwd(), 'public', 'uploads');
-                    try { await mkdir(uploadDir, { recursive: true }); } catch (e) { }
-                    await writeFile(join(uploadDir, fileName), buffer);
-                    dataPayload[field.name] = `/uploads/${fileName}`;
+                if (field.inputType === 'file') {
+                    if (typeof rawValue === 'string' && rawValue.startsWith('http')) {
+                        dataPayload[field.name] = rawValue;
+                    }
                 } else if (field.type === 'Int') {
                     dataPayload[field.name] = rawValue ? parseInt(rawValue as string) : undefined;
                 } else if (field.type === 'Boolean' || field.inputType === 'checkbox') {

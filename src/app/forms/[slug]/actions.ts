@@ -1,8 +1,6 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
 import { TABLE_CONFIG } from '@/app/admin/settings/constants';
 
 export async function submitCustomForm(formId: number, prevState: any, formData: FormData) {
@@ -48,17 +46,11 @@ export async function submitCustomForm(formId: number, prevState: any, formData:
             if (rawValue === null || rawValue === '') continue;
 
             if (field.ui_field_type === 'file') {
-                if (rawValue instanceof File && rawValue.size > 0) {
-                    const bytes = await rawValue.arrayBuffer();
-                    const buffer = Buffer.from(bytes);
-                    const fileName = `${Date.now()}-${rawValue.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-                    const uploadDir = join(process.cwd(), 'public', 'uploads');
-                    try { await mkdir(uploadDir, { recursive: true }); } catch (e) { }
-                    await writeFile(join(uploadDir, fileName), buffer);
-                    dataPayload[field.column_name] = `/uploads/${fileName}`;
-                } else if (typeof rawValue === 'string' && rawValue.startsWith('http')) {
-                    // Already an S3 URL from frontend
+                if (typeof rawValue === 'string' && rawValue.startsWith('http')) {
+                    // S3 URL from frontend
                     dataPayload[field.column_name] = rawValue;
+                } else {
+                    return { message: `فشل رفع الملف لـ "${field.display_name}". يرجى التأكد من الرفع الصحيح.` };
                 }
             } else if (field.data_type === 'Int') {
                 dataPayload[field.column_name] = parseInt(rawValue as string);

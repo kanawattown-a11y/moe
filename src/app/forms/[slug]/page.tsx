@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import PublicForm from './PublicForm';
 import { auth } from '@/auth';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CustomFormPublicPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const form = await prisma.customForm.findUnique({

@@ -71,7 +71,7 @@ export default function EditUserForm({ user, employeeOptions = [] }: { user: any
                     <label className="block text-sm font-bold text-gray-700 mb-2">ربط بملف موظف (اختياري)</label>
                     <SearchableSelect
                         name="employeeId"
-                        defaultValue={user.employee_id}
+                        defaultValue={user.linked_employee_id}
                         options={employeeOptions}
                         placeholder="ابحث عن موظف..."
                     />

@@ -4,6 +4,8 @@ import { FileText, Plus, ExternalLink, PenTool, Trash2 } from 'lucide-react';
 import { deleteForm } from './actions';
 import DeleteFormButton from './components/DeleteFormButton';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CustomFormsPage() {
     const forms = await prisma.customForm.findMany({
         orderBy: {

@@ -14,7 +14,8 @@ if (!connectionString) {
 
 const client = new Client({
     connectionString: connectionString,
-    ssl: false
+    // Flexible SSL for RDS
+    ssl: connectionString.includes('localhost') ? false : { rejectUnauthorized: false }
 });
 
 async function main() {

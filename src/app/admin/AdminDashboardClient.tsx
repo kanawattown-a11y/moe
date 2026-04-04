@@ -57,10 +57,10 @@ export default function AdminDashboardClient({ metrics, statusCounts, genderCoun
             </div>
 
             {/* Charts Section - Row 1 */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 overflow-hidden">
                 
                 {/* Gender Ratio (Pie) */}
-                <motion.div variants={itemVariants} className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-200/50 border border-gray-100 lg:col-span-1">
+                <motion.div variants={itemVariants} className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-200/50 border border-gray-100 lg:col-span-1 min-w-0">
                     <div className="flex items-center justify-between mb-8">
                         <h3 className="font-bold text-xl text-gray-800 flex items-center gap-3">
                             <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
@@ -81,7 +81,7 @@ export default function AdminDashboardClient({ metrics, statusCounts, genderCoun
                                     stroke="none"
                                 >
                                     {genderCounts.map((entry: any, index: number) => (
-                                        <Cell key={`cell-${index}`} fill={entry.name.includes('أنثى') ? '#ec4899' : '#3b82f6'} />
+                                        <Cell key={`cell-${index}`} fill={String(entry.name || '').includes('أنثى') ? '#ec4899' : '#3b82f6'} />
                                     ))}
                                 </Pie>
                                 <RechartsTooltip 
@@ -98,7 +98,7 @@ export default function AdminDashboardClient({ metrics, statusCounts, genderCoun
                 </motion.div>
 
                 {/* Job Category Distribution */}
-                <motion.div variants={itemVariants} className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-200/50 border border-gray-100 lg:col-span-2">
+                <motion.div variants={itemVariants} className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-200/50 border border-gray-100 lg:col-span-2 min-w-0">
                     <div className="flex items-center justify-between mb-8">
                         <h3 className="font-bold text-xl text-gray-800 flex items-center gap-3">
                             <div className="w-2 h-8 bg-accent rounded-full"></div>

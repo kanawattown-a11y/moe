@@ -107,7 +107,7 @@ export default function AdminSidebar() {
                 <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
                     {navItems.map((item) => {
                         if (userRole !== 'ADMIN' && item.href !== '/admin') {
-                            if (!userPermissions.includes(item.href)) return null;
+                            if (!Array.isArray(userPermissions) || !userPermissions.includes(item.href)) return null;
                         }
 
                         const Icon = item.icon;

@@ -55,11 +55,11 @@ export default async function SchoolDetailPage(props: { params: Promise<{ id: st
                             <div className="px-4 py-5 sm:p-6 space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-500">الرقم الإحصائي</label>
-                                    <p className="mt-1 text-sm text-gray-900 font-semibold">{school.stat_num || '-'}</p>
+                                    <p className="mt-1 text-sm text-gray-900 font-semibold">{school.stat_number || '-'}</p>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-500">المرحلة الدراسية</label>
-                                    <p className="mt-1 text-sm text-gray-900">{school.stage} ({school.stage_type})</p>
+                                    <p className="mt-1 text-sm text-gray-900">{school.phase} ({school.phase_type})</p>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-500">نوع التعليم</label>

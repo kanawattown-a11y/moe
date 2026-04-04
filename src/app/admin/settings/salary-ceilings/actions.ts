@@ -29,7 +29,7 @@ export async function createSalaryCeiling(prevState: any, formData: FormData) {
     try {
         await prisma.salaryCeiling.create({
             data: {
-                amount: amount,
+                ceiling: amount,
                 job_category_id: parseInt(categoryIdStr, 10)
             },
         });

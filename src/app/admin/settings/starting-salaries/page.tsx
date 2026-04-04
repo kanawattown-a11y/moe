@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function StartingSalariesPage() {
     const items = await prisma.startingSalary.findMany({
-        include: { job_category: true, salary_ceiling: true },
+        include: { job_category: true, ceiling: true },
         orderBy: { id: 'desc' },
         take: 100 // Safe limit
     });
@@ -17,7 +17,7 @@ export default async function StartingSalariesPage() {
     });
 
     const salaryCeilings = await prisma.salaryCeiling.findMany({
-        orderBy: { amount: 'desc' }
+        orderBy: { ceiling: 'desc' }
     });
 
     return (
@@ -56,12 +56,12 @@ export default async function StartingSalariesPage() {
                                 <tr key={item.id} className="hover:bg-blue-50/40 transition-colors group">
                                     <td className="p-5 text-gray-400 text-sm font-mono">{item.id}</td>
                                     <td className="p-5 font-bold text-emerald-600">
-                                        {new Intl.NumberFormat('ar-SY').format(item.amount)}
+                                        {new Intl.NumberFormat('ar-SY').format(item.starting_salary)}
                                     </td>
-                                    <td className="p-5 text-gray-900 font-medium">{item.appointment_capacity || '---'}</td>
+                                    <td className="p-5 text-gray-900 font-medium">{item.appointment_attr || '---'}</td>
                                     <td className="p-5 text-gray-600 text-sm">{item.job_category?.name || '---'}</td>
                                     <td className="p-5 text-gray-500 text-sm">
-                                        {item.salary_ceiling ? new Intl.NumberFormat('ar-SY').format(item.salary_ceiling.amount) : '---'}
+                                        {item.ceiling ? new Intl.NumberFormat('ar-SY').format(item.ceiling.ceiling) : '---'}
                                     </td>
                                     <td className="p-5">
                                         <DeleteItemButton id={item.id} />

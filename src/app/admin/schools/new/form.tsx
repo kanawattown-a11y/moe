@@ -21,7 +21,7 @@ function SubmitButton() {
 }
 
 type State = {
-    message: string | null;
+    message: string;
     errors?: {
         name?: string[];
         city_id?: string[];
@@ -34,7 +34,7 @@ type State = {
 };
 
 export default function NewSchoolPage({ cities, villages }: { cities: any[], villages: any[] }) {
-    const [state, dispatch] = useActionState(createSchool, { message: null, errors: {} } as State);
+    const [state, dispatch] = useActionState(createSchool, { message: "", errors: {} } as State);
 
     return (
         <div className="p-6 max-w-4xl mx-auto font-cairo" dir="rtl">
@@ -63,7 +63,7 @@ export default function NewSchoolPage({ cities, villages }: { cities: any[], vil
                         <div>
                             <label className="block text-sm font-bold text-gray-700 mb-2">الرقم الإحصائي</label>
                             <input
-                                name="stat_num"
+                                name="stat_number"
                                 type="number"
                                 className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
                             />
@@ -99,7 +99,7 @@ export default function NewSchoolPage({ cities, villages }: { cities: any[], vil
                         <div>
                             <label className="block text-sm font-bold text-gray-700 mb-2">المرحلة الدراسية</label>
                             <SearchableSelect
-                                name="stage"
+                                name="phase"
                                 options={[
                                     { value: "", label: "غير محدد" },
                                     { value: "ابتدائية", label: "ابتدائية (حلقة أولى)" },

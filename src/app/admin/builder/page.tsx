@@ -11,8 +11,7 @@ export default async function BuilderDashboard() {
             _count: {
                 select: { fields: true, relations: true }
             }
-        },
-        orderBy: { created_at: 'desc' }
+        }
     });
 
     async function applySchema() {
@@ -95,7 +94,6 @@ export default async function BuilderDashboard() {
                                     <th className="p-4">الاسم المعروض</th>
                                     <th className="p-4">الاسم البرمجي</th>
                                     <th className="p-4 text-center">عدد الحقول</th>
-                                    <th className="p-4">تاريخ الإنشاء</th>
                                     <th className="p-4 text-center">إجراءات</th>
                                 </tr>
                             </thead>
@@ -114,7 +112,6 @@ export default async function BuilderDashboard() {
                                         <td className="p-4 text-center text-gray-600">
                                             <span className="bg-gray-100 px-2 py-1 rounded text-xs font-bold">{t._count.fields} حقل / {t._count.relations} ربط</span>
                                         </td>
-                                        <td className="p-4 text-gray-400 text-sm">{t.created_at.toLocaleDateString('ar-SA')}</td>
                                         <td className="p-4 text-center flex justify-center gap-2">
                                             <Link href={`/admin/builder/${t.id}`} className="text-primary bg-primary/10 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-primary/20 transition">إدارة الحقول</Link>
                                             {!t.isSystem && (

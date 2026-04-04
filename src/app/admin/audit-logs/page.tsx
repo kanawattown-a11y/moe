@@ -59,7 +59,7 @@ export default async function AuditLogsPage() {
                                     {log.resource}
                                 </td>
                                 <td className="p-5 text-gray-500 text-xs max-w-xs truncate">
-                                    {log.details || '-'}
+                                    {typeof log.details === 'object' ? JSON.stringify(log.details) : (log.details || '-')}
                                 </td>
                                 <td className="p-5 text-gray-500 text-xs font-mono">
                                     {new Date(log.created_at).toLocaleString('ar-SY')}

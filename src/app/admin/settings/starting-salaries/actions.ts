@@ -26,10 +26,10 @@ export async function createStartingSalary(prevState: any, formData: FormData) {
     try {
         await prisma.startingSalary.create({
             data: {
-                amount: amount,
-                appointment_capacity: appointment_capacity?.trim() || null,
+                starting_salary: amount,
+                appointment_attr: appointment_capacity?.trim() || null,
                 job_category_id: categoryIdStr ? parseInt(categoryIdStr, 10) : null,
-                salary_ceiling_id: ceilingIdStr ? parseInt(ceilingIdStr, 10) : null
+                ceiling_id: ceilingIdStr ? parseInt(ceilingIdStr, 10) : null
             },
         });
 

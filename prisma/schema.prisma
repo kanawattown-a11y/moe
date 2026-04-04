@@ -40,8 +40,6 @@ model MetaTable {
   name           String         @unique
   slug           String         @unique
   title          String
-  created_at     DateTime       @default(now())
-  updated_at     DateTime       @updatedAt
   isSystem       Boolean        @default(false)
   
   fields         MetaField[]
@@ -61,6 +59,7 @@ model StartingSalary {
   job_category_id Int?     @map("معرف_الفئة_الوظيفية")
   ceiling_id      Int?     @map("معرف_السقف")
 
+  job_category    JobCategory? @relation(fields: [job_category_id], references: [id])
   ceiling         SalaryCeiling? @relation(fields: [ceiling_id], references: [id])
 
   @@map("جدول_أجر_بدء_التعيين")
@@ -285,6 +284,7 @@ model Employee {
   staffing                   Staffing[]
   weekly_quotas              WeeklyQuota[]
   transfers                  TransferOrLoan[]
+  user                       User?
   
   job_title_appointment      JobTitle?            @relation("ApptJobTitle", fields: [appt_job_title_id], references: [id], map: "fkey_employee_appt_job_title")
   job_title_current          JobTitle?            @relation("CurrJobTitle", fields: [curr_job_title_id], references: [id], map: "fkey_employee_curr_job_title")
@@ -341,6 +341,7 @@ model JobCategory {
   category_modifications CategoryModification[]
   salary_ceilings SalaryCeiling[]
   reference_quotas ReferenceQuota[]
+  starting_salaries StartingSalary[]
 
   @@map("جدول_الفئة_الوظيفية")
 }
@@ -439,7 +440,8 @@ model School {
   manager_id      Int?     @map("معرف_المدير")
   notes           String?  @map("ملاحظات")
 
-  village         Village? @relation(fields: [village_id], references: [id])
+  village         Village?  @relation(fields: [village_id], references: [id])
+  city            City?     @relation(fields: [city_id], references: [id])
   manager         Employee? @relation("SchoolManager", fields: [manager_id], references: [id])
   complex         EducationalComplex? @relation(fields: [complex_id], references: [id])
 
@@ -453,6 +455,7 @@ model City {
   name            String?  @map("المدينة")
 
   employees       Employee[]
+  schools         School[]
   villages        Village[]
 
   @@map("جدول_المدينة")
@@ -465,10 +468,12 @@ model User {
   permissions     Json?
   is_active       Boolean  @default(true) @map("فعال")
   linked_employee_id Int?  @unique @map("معرف_الموظف_المرتبط")
+  employee        Employee? @relation(fields: [linked_employee_id], references: [id])
 
   notifications   Notification[]
   books           Book[]
   news            News[]
+  audit_logs      AuditLog[]
 
   @@map("جدول_المستخدمين")
 }
@@ -594,6 +599,7 @@ model AuditLog {
   resource_id     String?  @map("معرف_المورد")
   details         Json?    @map("التفاصيل")
   created_at      DateTime @default(now()) @map("تاريخ_العملية")
+  user            User?    @relation(fields: [user_id], references: [id])
 
   @@map("جدول_سجل_التدقيق")
 }
@@ -613,6 +619,15 @@ model SalaryRecord {
 
   @@map("جدول_سجلات_الرواتب")
 }
+
+model FinancialAdopter {
+  id              Int      @id @default(autoincrement()) @map("معرف_المعتمد")
+  name            String?  @map("الاسم")
+  national_id     String?  @map("الرقم_الوطني")
+
+  @@map("جدول_المعتمدين_الماليين")
+}
+
 model SalaryCeiling {
   id              Int      @id @default(autoincrement()) @map("معرف_السقف")
   ceiling         Float    @map("السقف")

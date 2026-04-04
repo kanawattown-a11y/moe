@@ -25,9 +25,9 @@ type State = {
     errors?: {
         name?: string[];
         city_id?: string[];
-        stat_num?: string[];
+        stat_number?: string[];
         village_id?: string[];
-        stage?: string[];
+        phase?: string[];
         phone?: string[];
         education_type?: string[];
     };
@@ -64,9 +64,9 @@ export default function EditSchoolForm({ school, cities, villages }: { school: a
                         <div>
                             <label className="block text-sm font-bold text-gray-700 mb-2">الرقم الإحصائي</label>
                             <input
-                                name="stat_num"
-                                type="number"
-                                defaultValue={school.stat_num}
+                                name="stat_number"
+                                type="text"
+                                defaultValue={school.stat_number || ''}
                                 className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
                             />
                         </div>
@@ -104,8 +104,8 @@ export default function EditSchoolForm({ school, cities, villages }: { school: a
                         <div className="md:col-span-1">
                             <label className="block text-sm font-bold text-gray-700 mb-2">المرحلة الدراسية</label>
                             <SearchableSelect
-                                name="stage"
-                                defaultValue={school.stage || undefined}
+                                name="phase"
+                                defaultValue={school.phase || undefined}
                                 options={[
                                     { value: 'ابتدائي', label: 'ابتدائي' },
                                     { value: 'إعدادي', label: 'إعدادي' },

@@ -14,7 +14,7 @@ export async function createTermination(prevState: any, formData: FormData) {
         await prisma.termination.create({
             data: {
                 employee_id: Number(employee_id),
-                type: formData.get('type') as string,
+                action_type: formData.get('type') as string,
                 decision_num: formData.get('decision_num') as string,
                 decision_date: formData.get('decision_date') ? new Date(formData.get('decision_date') as string) : null,
                 termination_date: formData.get('termination_date') ? new Date(formData.get('termination_date') as string) : null,

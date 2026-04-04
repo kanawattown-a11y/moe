@@ -4,14 +4,14 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export async function createVacation(prevState: any, formData: FormData) {
+export async function createLeaveRequest(prevState: any, formData: FormData) {
     const employee_id = formData.get('employee_id');
     if (!employee_id) {
         return { message: 'يرجى اختيار الموظف' };
     }
 
     try {
-        await prisma.leaveRequest.create({
+        await (prisma as any).leaveRequest.create({
             data: {
                 employee_id: Number(employee_id),
                 leave_type: formData.get('type') as string,

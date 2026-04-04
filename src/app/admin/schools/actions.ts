@@ -7,10 +7,10 @@ import { z } from 'zod'
 
 const SchoolSchema = z.object({
     name: z.string().min(3, { message: 'اسم المدرسة يجب أن يكون 3 أحرف على الأقل' }),
-    stat_num: z.coerce.number().optional(),
+    stat_number: z.coerce.number().optional(),
     city_id: z.coerce.number().min(1, { message: 'يرجى اختيار المدينة' }),
     village_id: z.coerce.number().optional(),
-    stage: z.string().optional(),
+    phase: z.string().optional(),
     phone: z.string().optional(),
     education_type: z.string().optional(),
 })
@@ -18,10 +18,10 @@ const SchoolSchema = z.object({
 export async function updateSchool(schoolId: number, prevState: any, formData: FormData) {
     const validatedFields = SchoolSchema.safeParse({
         name: formData.get('name'),
-        stat_num: formData.get('stat_num'),
+        stat_number: formData.get('stat_number'),
         city_id: formData.get('city_id'),
         village_id: formData.get('village_id'),
-        stage: formData.get('stage'),
+        phase: formData.get('phase'),
         phone: formData.get('phone'),
         education_type: formData.get('education_type'),
     })
@@ -33,17 +33,17 @@ export async function updateSchool(schoolId: number, prevState: any, formData: F
         }
     }
 
-    const { name, stat_num, city_id, village_id, stage, phone, education_type } = validatedFields.data
+    const { name, stat_number, city_id, village_id, phase, phone, education_type } = validatedFields.data
 
     try {
         await prisma.school.update({
             where: { id: schoolId },
             data: {
                 name,
-                stat_num,
+                stat_number,
                 city_id,
                 village_id: village_id || null,
-                stage,
+                phase,
                 phone,
                 education_type,
             },
@@ -62,10 +62,10 @@ export async function updateSchool(schoolId: number, prevState: any, formData: F
 export async function createSchool(prevState: any, formData: FormData) {
     const validatedFields = SchoolSchema.safeParse({
         name: formData.get('name'),
-        stat_num: formData.get('stat_num'),
+        stat_number: formData.get('stat_number'),
         city_id: formData.get('city_id'),
         village_id: formData.get('village_id'),
-        stage: formData.get('stage'),
+        phase: formData.get('phase'),
         phone: formData.get('phone'),
         education_type: formData.get('education_type'),
     });
@@ -77,16 +77,16 @@ export async function createSchool(prevState: any, formData: FormData) {
         };
     }
 
-    const { name, stat_num, city_id, village_id, stage, phone, education_type } = validatedFields.data;
+    const { name, stat_number, city_id, village_id, phase, phone, education_type } = validatedFields.data;
 
     try {
         await prisma.school.create({
             data: {
                 name,
-                stat_num,
+                stat_number,
                 city_id,
                 village_id: village_id || null,
-                stage,
+                phase,
                 phone,
                 education_type,
             },

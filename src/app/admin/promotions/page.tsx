@@ -48,7 +48,7 @@ export default async function PromotionsPage() {
                                 <td className="p-5 text-emerald-600 font-bold text-lg">{p.salary_after || '-'}</td>
                                 <td className="p-5">
                                     <span className="px-3 py-1 rounded-full text-xs font-bold border bg-blue-50 text-blue-700 border-blue-200">
-                                        {p.efficiency_grade || '-'}
+                                        {p.competence_degree || '-'}
                                     </span>
                                 </td>
                                 <td className="p-5">

@@ -50,7 +50,7 @@ export default async function SalaryCeilingsPage() {
                                 <tr key={item.id} className="hover:bg-blue-50/40 transition-colors group">
                                     <td className="p-5 text-gray-400 text-sm font-mono">{item.id}</td>
                                     <td className="p-5 font-bold text-gray-900 group-hover:text-primary transition-colors">
-                                        {new Intl.NumberFormat('ar-SY').format(item.amount)}
+                                        {new Intl.NumberFormat('ar-SY').format(item.ceiling)}
                                     </td>
                                     <td className="p-5 text-gray-600">{item.job_category?.name || '---'}</td>
                                     <td className="p-5">

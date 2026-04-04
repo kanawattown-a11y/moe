@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { createVacation } from '../actions';
+import { createLeaveRequest } from '../actions';
 import { Save, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import SearchableSelect from '@/components/SearchableSelect';
@@ -17,7 +17,7 @@ interface Employee {
 const inputClasses = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all text-primary font-medium bg-gray-50 focus:bg-white";
 
 export default function VacationForm({ employees }: { employees: Employee[] }) {
-    const [state, formAction, isPending] = useActionState(createVacation, null);
+    const [state, formAction, isPending] = useActionState(createLeaveRequest, null);
 
     return (
         <form action={formAction} className="space-y-6">

@@ -12,15 +12,10 @@ export async function createFinancialAdopter(prevState: any, formData: FormData)
     }
 
     try {
-        let national_id_val = null;
-        if (national_id_str && national_id_str.trim().length > 0) {
-            national_id_val = BigInt(national_id_str.trim());
-        }
-
         await prisma.financialAdopter.create({
             data: {
                 name: name.trim(),
-                national_id: national_id_val
+                national_id: national_id_str ? national_id_str.trim() : null
             },
         });
 

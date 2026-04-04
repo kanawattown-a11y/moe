@@ -76,7 +76,7 @@ export default async function AdminSchoolsPage(props: { searchParams: Promise<{ 
                                             </div>
                                             <div>
                                                 <div className="font-bold text-gray-900 leading-tight block group-hover:text-primary transition-colors">{school.name}</div>
-                                                {school.stat_num && <div className="text-xs text-gray-400 mt-1 font-mono">الرقم الإحصائي: {school.stat_num}</div>}
+                                                {school.stat_number && <div className="text-xs text-gray-400 mt-1 font-mono">الرقم الإحصائي: {school.stat_number}</div>}
                                             </div>
                                         </div>
                                     </td>
@@ -85,7 +85,7 @@ export default async function AdminSchoolsPage(props: { searchParams: Promise<{ 
                                     </td>
                                     <td className="p-5">
                                         <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold border border-gray-200">
-                                            {school.stage || 'غير محدد'}
+                                            {school.phase || 'غير محدد'}
                                         </span>
                                     </td>
                                     <td className="p-5 text-center font-bold text-primary">

@@ -93,7 +93,7 @@ export default async function SchoolsPage({ searchParams }: { searchParams: { q?
                                             <span className="font-bold text-primary">{school._count.employees}</span>
                                         </div>
                                         <span className="text-xs bg-white border border-gray-200 px-2 py-1 rounded text-gray-500">
-                                            {school.stage || 'مدرسة'}
+                                            {school.phase || 'مدرسة'}
                                         </span>
                                     </div>
                                     {school.phone && (

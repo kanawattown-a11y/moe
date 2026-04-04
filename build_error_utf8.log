@@ -1,0 +1,56 @@
+﻿
+> moe-system@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+node.exe : ΓÜá The "middleware" file convention is deprecated. 
+Please use "proxy" instead. Learn more: 
+https://nextjs.org/docs/messages/middleware-to-proxy
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~
+    + CategoryInfo          : NotSpecified: (ΓÜá The "middle...lewa 
+   re-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 12.9s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/35) ...
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."┘à╪╣╪▒┘ü_╪º┘ä┘à┘ê╪╕┘ü", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä╪º╪│┘à_╪º┘ä╪½┘ä╪º╪½┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä╪▒┘é┘à_╪º┘ä╪░╪º╪¬┘è" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬" WHERE "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."┘à╪╣╪▒┘ü_╪º┘ä╪¡╪º┘ä╪⌐" = $1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä╪º╪│┘à_╪º┘ä╪½┘ä╪º╪½┘è" ASC OFFSET $2
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."┘à╪╣╪▒┘ü_╪º┘ä╪│╪¼┘ä", "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪│╪¬╪«╪»┘à", "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."╪º┘ä╪╣┘à┘ä┘è╪⌐", "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."╪º┘ä┘à┘ê╪▒╪»", "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."┘à╪╣╪▒┘ü_╪º┘ä┘à┘ê╪▒╪»", "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."╪º┘ä╪¬┘ü╪º╪╡┘è┘ä", "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."╪¬╪º╪▒┘è╪«_╪º┘ä╪╣┘à┘ä┘è╪⌐" FROM "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪│╪¼┘ä_╪º┘ä╪¬╪»┘é┘è┘é"."╪¬╪º╪▒┘è╪«_╪º┘ä╪╣┘à┘ä┘è╪⌐" DESC LIMIT $1 OFFSET $2
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│╪¬╪«╪»┘à┘è┘å"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪│╪¬╪«╪»┘à", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│╪¬╪«╪»┘à┘è┘å"."╪º╪│┘à_╪º┘ä┘à╪│╪¬╪«╪»┘à", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│╪¬╪«╪»┘à┘è┘å"."╪º╪│┘à_╪º┘ä╪»┘ê╪▒" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│╪¬╪«╪»┘à┘è┘å" WHERE "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│╪¬╪«╪»┘à┘è┘å"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪│╪¬╪«╪»┘à" IN ($1) OFFSET $2
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»┘è┘å╪⌐"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪»┘è┘å╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»┘è┘å╪⌐"."╪º┘ä┘à╪»┘è┘å╪⌐" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»┘è┘å╪⌐" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»┘è┘å╪⌐"."╪º┘ä┘à╪»┘è┘å╪⌐" ASC OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."┘à╪╣╪▒┘ü_╪º┘ä┘à┘ê╪╕┘ü", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä╪º╪│┘à", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä┘å╪│╪¿╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä╪▒┘é┘à_╪º┘ä┘ê╪╖┘å┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬"."╪º┘ä╪º╪│┘à" ASC OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."┘à╪╣╪▒┘ü_╪º┘ä╪¬╪▒┘ü┘è╪╣", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."┘à╪╣╪▒┘ü_╪º┘ä┘à┘ê╪╕┘ü", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."╪º┘ä╪ú╪¼╪▒_┘é╪¿┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."╪º┘ä╪ú╪¼╪▒_╪¿╪╣╪»_╪º┘ä╪¬╪▒┘ü┘è╪╣", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."╪»╪▒╪¼╪⌐_╪º┘ä┘â┘ü╪º╪í╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."┘å╪│╪¿╪⌐_╪º┘ä╪╣┘ä╪º┘ê╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."┘à┘é╪»╪º╪▒_╪º┘ä╪╣┘ä╪º┘ê╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."╪º┘ä┘à╪»╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."┘à┘ä╪º╪¡╪╕╪º╪¬", "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."╪º┘ä╪¬╪º╪▒┘è╪«_╪º┘ä╪¡╪º┘ä┘è" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä╪¬╪▒┘ü┘è╪╣"."┘à╪╣╪▒┘ü_╪º┘ä╪¬╪▒┘ü┘è╪╣" DESC OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."┘à╪╣╪▒┘ü_╪º┘ä╪Ñ╪¼╪▒╪º╪í", "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."┘à╪╣╪▒┘ü_╪º┘ä┘à┘ê╪╕┘ü", "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."┘å┘ê╪╣_╪º┘ä╪º╪¼╪▒╪º╪í", "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."╪▒┘é┘à_╪º┘ä┘é╪▒╪º╪▒", "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."╪¬╪º╪▒┘è╪«_╪º┘ä┘é╪▒╪º╪▒", "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."╪¬╪º╪▒┘è╪«_╪º┘ä╪º┘å┘ü┘â╪º┘â", "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."╪º┘ä┘å┘é┘ä_╪Ñ┘ä┘ë" FROM "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪¬╪▒┘â_╪º┘ä╪╣┘à┘ä"."┘à╪╣╪▒┘ü_╪º┘ä╪Ñ╪¼╪▒╪º╪í" DESC OFFSET $1
+prisma:query SELECT "public"."meta_tables"."id", "public"."meta_tables"."name", "public"."meta_tables"."slug", "public"."meta_tables"."title", "public"."meta_tables"."isSystem" FROM "public"."meta_tables" WHERE 1=1 OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è"."┘à╪╣╪▒┘ü_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è"."╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪»┘è┘å╪⌐" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è"."╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è" ASC OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪¬╪╡┘å┘è┘ü╪º╪¬_╪º┘ä┘à┘â╪¬╪¿╪⌐"."┘à╪╣╪▒┘ü_╪º┘ä╪¬╪╡┘å┘è┘ü", "public"."╪¼╪»┘ê┘ä_╪¬╪╡┘å┘è┘ü╪º╪¬_╪º┘ä┘à┘â╪¬╪¿╪⌐"."╪º╪│┘à_╪º┘ä╪¬╪╡┘å┘è┘ü", "public"."╪¼╪»┘ê┘ä_╪¬╪╡┘å┘è┘ü╪º╪¬_╪º┘ä┘à┘â╪¬╪¿╪⌐"."╪º┘ä┘ê╪╡┘ü" FROM "public"."╪¼╪»┘ê┘ä_╪¬╪╡┘å┘è┘ü╪º╪¬_╪º┘ä┘à┘â╪¬╪¿╪⌐" WHERE 1=1 OFFSET $1
+prisma:query 
+        SELECT * FROM "╪¼╪»┘ê┘ä_╪º┘ä╪░╪º╪¬┘è╪º╪¬" 
+        WHERE "╪¬┘à_╪º┘ä┘à┘ê╪º┘ü┘é╪⌐" = false 
+        ORDER BY "┘à╪╣╪▒┘ü_╪º┘ä┘à┘ê╪╕┘ü" DESC
+    
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪»╪▒╪│╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."╪º┘ä╪▒┘é┘à ╪º┘ä╪º╪¡╪╡╪º╪ª┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪¼┘à╪╣", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."╪º┘ä┘à╪¼┘à╪╣", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à╪╣╪▒┘ü_╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."╪º┘ä┘é╪▒┘è╪⌐_╪º┘ä╪¡┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪»┘è┘å╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."╪º╪│┘à_╪º┘ä┘à╪»╪▒╪│╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘ç╪º╪¬┘ü ╪º┘ä┘à╪»╪▒╪│╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘å┘ê╪╣ ╪º┘ä╪¬╪╣┘ä┘è┘à", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à╪▒╪¡┘ä╪⌐ ╪º┘ä┘à╪»╪▒╪│╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘å┘ê╪╣ ╪º┘ä┘à╪▒╪¡┘ä╪⌐", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪»┘è╪▒", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."┘à┘ä╪º╪¡╪╕╪º╪¬" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪»╪º╪▒╪│"."╪º╪│┘à_╪º┘ä┘à╪»╪▒╪│╪⌐" ASC OFFSET $1
+prisma:query SELECT "public"."meta_tables"."id", "public"."meta_tables"."name", "public"."meta_tables"."slug", "public"."meta_tables"."title", "public"."meta_tables"."isSystem", "aggr_selection_0_MetaField"."_aggr_count_fields", "aggr_selection_1_MetaRelation"."_aggr_count_relations" FROM "public"."meta_tables" LEFT JOIN (SELECT "public"."meta_fields"."tableId", COUNT(*) AS "_aggr_count_fields" FROM "public"."meta_fields" WHERE 1=1 GROUP BY "public"."meta_fields"."tableId") AS "aggr_selection_0_MetaField" ON ("public"."meta_tables"."id" = "aggr_selection_0_MetaField"."tableId") LEFT JOIN (SELECT "public"."meta_relations"."tableId", COUNT(*) AS "_aggr_count_relations" FROM "public"."meta_relations" WHERE 1=1 GROUP BY "public"."meta_relations"."tableId") AS "aggr_selection_1_MetaRelation" ON ("public"."meta_tables"."id" = "aggr_selection_1_MetaRelation"."tableId") WHERE 1=1 OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è"."╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è"."╪º┘ä┘à╪│┘à┘ë_╪º┘ä┘ê╪╕┘è┘ü┘è_╪º┘ä╪¡╪º┘ä┘è" ASC OFFSET $1
+  Generating static pages using 11 workers (8/35) 
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪¼┘à╪╣_╪º┘ä╪¬╪▒╪¿┘ê┘è"."┘à╪╣╪▒┘ü_╪º┘ä┘à╪¼┘à╪╣", "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪¼┘à╪╣_╪º┘ä╪¬╪▒╪¿┘ê┘è"."╪º╪│┘à_╪º┘ä┘à╪¼┘à╪╣" FROM "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪¼┘à╪╣_╪º┘ä╪¬╪▒╪¿┘ê┘è" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_╪º┘ä┘à╪¼┘à╪╣_╪º┘ä╪¬╪▒╪¿┘ê┘è"."╪º╪│┘à_╪º┘ä┘à╪¼┘à╪╣" ASC OFFSET $1
+prisma:query SELECT "public"."╪¼╪»┘ê┘ä_┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å"."┘à╪╣╪▒┘ü_┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å", "public"."╪¼╪»┘ê┘ä_┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å"."┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å" FROM "public"."╪¼╪»┘ê┘ä_┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å" WHERE 1=1 ORDER BY "public"."╪¼╪»┘ê┘ä_┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å"."┘å┘ê╪╣_╪º┘ä╪¬╪╣┘è┘è┘å" ASC OFFSET $1
+Error occurred prerendering page "/admin/audit-logs". Read more: 
+https://nextjs.org/docs/messages/prerender-error
+Error: Objects are not valid as a React child (found: object with 
+keys {count}). If you meant to render a collection of children, use 
+an array instead.
+    at ignore-listed frames {
+  digest: '2709163860'
+}
+Export encountered an error on /admin/audit-logs/page: 
+/admin/audit-logs, exiting the build.
+Γ¿» Next.js build worker exited with code: 1 and signal: null

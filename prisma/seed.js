@@ -18,14 +18,33 @@ const client = new Client({
 });
 
 async function main() {
-    // Use the specific 2026 employee data file provided by the user
-    const dbPath = "C:\\Users\\Dell\\Desktop\\MOE\\بيانات العاملين 2026.accdb";
-    console.log('Reading Absolute Source from:', dbPath);
+    // Ultimate Flexible Path Search
+    const pathsToTry = [
+        path.join(process.cwd(), "data.accdb"),
+        "C:\\Users\\Dell\\Desktop\\MOE\\moe-system\\data.accdb",
+        "C:\\Users\\Dell\\Desktop\\MOE\\بيانات العاملين 2026.accdb",
+        path.join(process.cwd(), "..", "بيانات العاملين 2026.accdb"),
+        path.join(process.cwd(), "بيانات العاملين 2026.accdb"),
+        path.join(__dirname, "..", "data.accdb")
+    ];
 
-    if (!fs.existsSync(dbPath)) {
-        console.error('Database file not found at:', dbPath);
+    let dbPath = null;
+    for (const p of pathsToTry) {
+        if (fs.existsSync(p)) {
+            dbPath = p;
+            break;
+        }
+    }
+
+    if (!dbPath) {
+        console.error('CRITICAL ERROR: Database file not found at any of these locations:');
+        pathsToTry.forEach(p => console.log(' - tried:', p));
+        console.log('--- ACTION REQUIRED ---');
+        console.log('Please COPY your file "بيانات العاملين 2026.accdb" INTO this folder: ' + process.cwd());
         process.exit(1);
     }
+    
+    console.log('--- ABSOLUTE SOURCE FOUND AT: ', dbPath);
 
     const buffer = fs.readFileSync(dbPath);
     const reader = new MdbReader(buffer);

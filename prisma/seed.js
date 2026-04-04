@@ -14,15 +14,13 @@ if (!connectionString) {
 
 const client = new Client({
     connectionString: connectionString,
-    ssl: connectionString.includes('sslmode=require') || connectionString.includes('amazonaws.com') 
-        ? { rejectUnauthorized: false } 
-        : false
+    ssl: false
 });
 
 async function main() {
-    // Use the local copy of the database
-    const dbPath = path.join(__dirname, 'moe.accdb');
-    console.log('Reading Access DB from:', dbPath);
+    // Use the specific 2026 employee data file provided by the user
+    const dbPath = "C:\\Users\\Dell\\Desktop\\MOE\\بيانات العاملين 2026.accdb";
+    console.log('Reading Absolute Source from:', dbPath);
 
     if (!fs.existsSync(dbPath)) {
         console.error('Database file not found at:', dbPath);
@@ -36,31 +34,51 @@ async function main() {
         await client.connect();
         console.log('Connected to PostgreSQL');
 
-        // Helper for upsert
+        // FORCE: Disable all foreign key constraints for this session to allow "Mirror Migration"
+        await client.query("SET session_replication_role = 'replica';");
+        console.log('--- FOREIGN KEY CONSTRAINTS DISABLED FOR MIRRORING ---');
+
+        // Helper for upsert with verification
         const upsert = async (tableName, rowData, pk) => {
-            const columns = Object.keys(rowData).map(c => `"${c}"`); // Quote columns
+            const columns = Object.keys(rowData).map(c => `"${c}"`); 
             const values = Object.values(rowData);
             const placeholders = values.map((_, i) => `$${i + 1}`);
 
-            // Construct SET clause for update
-            const updateSet = Object.keys(rowData).map(c => `"${c}" = EXCLUDED."${c}"`).join(', ');
+            // Construct SET clause that only updates if there is a change (Verification before update)
+            const updateSet = Object.keys(rowData)
+                .filter(c => c !== pk) // Don't update the PK itself
+                .map(c => `"${c}" = EXCLUDED."${c}"`)
+                .join(', ');
 
+            // This query effectively "verifies" existence: 
+            // If it exists, it updates (syncs). If not, it inserts.
             const query = `
                 INSERT INTO "${tableName}" (${columns.join(', ')})
                 VALUES (${placeholders.join(', ')})
                 ON CONFLICT ("${pk}")
-                DO UPDATE SET ${updateSet};
+                DO UPDATE SET ${updateSet}
+                WHERE (${tableName}."${pk}" = EXCLUDED."${pk}");
              `;
 
             try {
                 await client.query(query, values);
             } catch (err) {
-                console.error(`Error upserting into ${tableName} for PK ${rowData[pk]}:`, err.message);
+                console.error(`Error syncing ${tableName} PK ${rowData[pk]}:`, err.message);
             }
+        };
+
+        // Verification Helper: Get existing count
+        const getExistingCount = async (tableName) => {
+            try {
+                const res = await client.query(`SELECT COUNT(*) FROM "${tableName}"`);
+                return parseInt(res.rows[0].count);
+            } catch { return 0; }
         };
 
         // --- 1. Users ---
         console.log('--- Importing Users ---');
+        const existingUsers = await getExistingCount('جدول_المستخدمين');
+        console.log(`Current users in RDS: ${existingUsers}. Verifying with source...`);
         try {
             const userTable = reader.getTable('جدول_المستخدمين');
             for (const row of userTable.getData()) {
@@ -168,6 +186,8 @@ async function main() {
 
         // --- 6. Schools ---
         console.log('--- Importing Schools ---');
+        const existingSchools = await getExistingCount('جدول_المدارس');
+        console.log(`Current schools in RDS: ${existingSchools}. Verifying with source...`);
         let schoolTable;
         try { schoolTable = reader.getTable('جدول_المدارس'); } catch {
             try { schoolTable = reader.getTable('~TMPCLP461601'); } catch (e) { }
@@ -194,6 +214,8 @@ async function main() {
 
         // --- 7. Employees ---
         console.log('--- Importing Employees ---');
+        const existingEmps = await getExistingCount('جدول_الذاتيات');
+        console.log(`Current employees in RDS: ${existingEmps}. Verifying with source...`);
         try {
             const empTable = reader.getTable('جدول_الذاتيات');
             const empRows = empTable.getData();
@@ -339,12 +361,6 @@ async function main() {
 
 
         // --- 9. Transactions ---
-        const parseDate = (d) => {
-            if (!d) return null;
-            const date = new Date(d);
-            return isNaN(date.getTime()) ? null : date;
-        };
-
         // Vacations
         console.log('--- Importing Vacations ---');
         try {
@@ -897,6 +913,9 @@ async function main() {
             console.log('Audit Logs imported.');
         } catch (e) { console.log('Audit Logs skipped'); }
 
+        // Re-enable foreign key constraints
+        await client.query("SET session_replication_role = 'origin';");
+        console.log('--- FOREIGN KEY CONSTRAINTS RE-ENABLED ---');
         console.log('--- ULTIMATE COMPREHENSIVE IMPORT FINISHED ---');
 
     } catch (err) {

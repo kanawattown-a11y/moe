@@ -18,7 +18,11 @@ export default async function EmployeesPage(props: { searchParams?: Promise<{ q?
 
     const isUserAManager = isManager(session);
     
-    // If Teacher, and they try to access the list, just show their own data
+    // If Teacher, and they try to access the list, REDIRECT to their own profile
+    if (!isUserAManager && session.user.employee_id) {
+        redirect(`/admin/employees/${session.user.employee_id}`);
+    }
+
     const accessFilter = getEmployeeAccessFilter(session);
     const searchParams = await props.searchParams;
     const q = searchParams?.q || '';

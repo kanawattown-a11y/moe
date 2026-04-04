@@ -23,8 +23,12 @@ export default async function MovementsPage() {
         <div className="p-6 md:p-10 font-cairo bg-gray-50/30 min-h-screen" dir="rtl">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">إدارة الندب والإيفاد والإعارة</h1>
-                    <p className="text-gray-500 mt-2">سجل حركات التنقل للموظفين وتفاصيل الانفكاك والمباشرة</p>
+                    <h1 className="text-3xl font-black text-gray-900 tracking-tight">
+                        {isUserAManager ? 'إدارة الندب والإيفاد والإعارة' : 'سجل تحركاتي الوظيفية'}
+                    </h1>
+                    <p className="text-gray-500 mt-2 font-bold opacity-70">
+                        {isUserAManager ? 'سجل حركات التنقل للموظفين وتفاصيل الانفكاك والمباشرة' : 'تتبع قرارات الندب، الإيفاد، أو الإعارة الصادرة بحقك'}
+                    </p>
                 </div>
                 {isUserAManager && (
                     <Link href="/admin/movements/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">

@@ -23,8 +23,12 @@ export default async function VacationsPage() {
         <div className="p-6 md:p-10 font-cairo bg-gray-50/30 min-h-screen" dir="rtl">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">إدارة الإجازات</h1>
-                    <p className="text-gray-500 mt-2">سجل إجازات الموظفين (صحية، إدارية، أمومة...)</p>
+                    <h1 className="text-3xl font-black text-gray-900 tracking-tight">
+                        {isUserAManager ? 'إدارة الإجازات' : 'سجل إجازاتي الشخصي'}
+                    </h1>
+                    <p className="text-gray-500 mt-2 font-bold opacity-70">
+                        {isUserAManager ? 'سجل إجازات الموظفين (صحية، إدارية، أمومة...)' : 'عرض كافة الإجازات المسجلة في ملفك الوظيفي'}
+                    </p>
                 </div>
                 {isUserAManager && (
                     <Link href="/admin/vacations/new" className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all flex items-center gap-2">

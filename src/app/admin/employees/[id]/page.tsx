@@ -101,12 +101,23 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
 
                 {/* Main Info Card */}
                 <div className="bg-white shadow-xl rounded-xl overflow-hidden overflow-x-auto">
-                    <div className="px-6 py-6 border-b border-gray-100 flex items-center gap-3">
-                        <span className="bg-blue-50 text-primary p-2 rounded-lg text-xl">👤</span>
-                        <div>
-                            <h3 className="text-lg font-bold text-gray-900">البيانات الشخصية والوظيفية</h3>
-                            <p className="text-sm text-gray-500">تفاصيل السجل رقم {employee.id}</p>
+                    <div className="px-6 py-6 border-b border-gray-100 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                            <span className="bg-blue-50 text-primary p-2 rounded-lg text-xl">👤</span>
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900">البيانات الشخصية والوظيفية</h3>
+                                <p className="text-sm text-gray-500">تفاصيل السجل رقم {employee.id}</p>
+                            </div>
                         </div>
+                        {employee.profile_picture_url ? (
+                            <div className="h-20 w-20 rounded-2xl overflow-hidden shadow-lg border-2 border-white ring-4 ring-blue-50">
+                                <Image src={employee.profile_picture_url} alt="Profile" width={80} height={80} className="object-cover" />
+                            </div>
+                        ) : (
+                            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-2xl font-black shadow-lg border-2 border-white ring-4 ring-blue-50">
+                                {employee.first_name?.[0]}{employee.last_name?.[0]}
+                            </div>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-100">

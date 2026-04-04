@@ -1,10 +1,12 @@
 import { prisma } from '@/lib/prisma';
 import PayrollClient from './PayrollClient';
-import { checkAuth, getAccessFilter } from '@/lib/auth-utils';
+import PersonalPayrollView from './PersonalPayrollView';
+import { checkAuth, getAccessFilter, isManager } from '@/lib/auth-utils';
 
 export default async function PayrollPage(props: { searchParams: Promise<{ month?: string; year?: string }> }) {
     const session = await checkAuth();
     const searchParams = await props.searchParams;
+    const isUserAManager = isManager(session);
     
     const currentMonth = searchParams.month ? Number(searchParams.month) : new Date().getMonth() + 1;
     const currentYear = searchParams.year ? Number(searchParams.year) : new Date().getFullYear();
@@ -12,12 +14,16 @@ export default async function PayrollPage(props: { searchParams: Promise<{ month
     // Apply security filter
     const accessFilter = getAccessFilter(session);
 
+    // If teacher, we want to see ALL their history, not just current month (or at least more than one)
+    // But for the overview, we'll follow the same logic or fetch last 12 months.
+    const queryWhere: any = { ...accessFilter };
+    if (isUserAManager) {
+        queryWhere.month = currentMonth;
+        queryWhere.year = currentYear;
+    }
+
     const records = await (prisma as any).salaryRecord.findMany({
-        where: {
-            ...accessFilter,
-            month: currentMonth,
-            year: currentYear
-        },
+        where: queryWhere,
         include: {
             employee: {
                 select: {
@@ -26,11 +32,10 @@ export default async function PayrollPage(props: { searchParams: Promise<{ month
                 }
             }
         },
-        orderBy: { id: 'desc' },
-        take: 100
+        orderBy: [{ year: 'desc' }, { month: 'desc' }],
+        take: isUserAManager ? 100 : 12 // Admins see current, Teachers see last 12
     });
 
-    // Ensure all data is serializable for Client Components
     const serializedRecords = records.map((r: any) => ({
         ...r,
         id: String(r.id),
@@ -42,6 +47,15 @@ export default async function PayrollPage(props: { searchParams: Promise<{ month
         created_at: r.created_at?.toISOString(),
         updated_at: r.updated_at?.toISOString(),
     }));
+
+    if (!isUserAManager) {
+        const employeeName = serializedRecords[0]?.employee?.full_name_triplet || session.user.name || 'الموظف';
+        return (
+            <div className="p-6 md:p-10 bg-gray-50/30 min-h-screen">
+                <PersonalPayrollView records={serializedRecords} employeeName={employeeName} />
+            </div>
+        );
+    }
 
     const summary = {
         totalExpenses: serializedRecords.reduce((acc: number, r: any) => acc + r.net_salary, 0),

@@ -7,7 +7,7 @@ export default async function AdminDashboard() {
     // 1. Fetch Key Metrics
     const employeeCount = await prisma.employee.count();
     const schoolCount = await prisma.school.count();
-    const newsCount = await prisma.article.count();
+    const newsCount = await prisma.news.count();
     const bookCount = await prisma.book.count();
 
     // 2. Fetch Demographic Data for Charts

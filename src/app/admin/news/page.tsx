@@ -13,7 +13,7 @@ async function getArticles(query: string) {
             mode: 'insensitive'
         };
     }
-    return await prisma.article.findMany({
+    return await prisma.news.findMany({
         where,
         orderBy: { created_at: 'desc' }
     });

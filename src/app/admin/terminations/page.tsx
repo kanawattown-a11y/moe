@@ -45,7 +45,7 @@ export default async function TerminationsPage() {
                                 </td>
                                 <td className="p-5">
                                     <span className="px-3 py-1 rounded-full text-xs font-bold border bg-red-50 text-red-700 border-red-200">
-                                        {t.type || '-'}
+                                        {t.action_type || '-'}
                                     </span>
                                 </td>
                                 <td className="p-5 text-gray-600 font-medium">{t.termination_date?.toLocaleDateString('ar-SY') || '-'}</td>

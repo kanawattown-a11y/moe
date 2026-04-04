@@ -10,7 +10,7 @@ export default async function CustomFormDesignerPage({ params }: { params: Promi
         where: { id: Number(id) },
         include: {
             fields: {
-                orderBy: { orderIndex: 'asc' }
+                orderBy: { order: 'asc' }
             }
         }
     });
@@ -26,19 +26,21 @@ export default async function CustomFormDesignerPage({ params }: { params: Promi
         (form as any).buttonColor = rawForm[0].buttonColor;
     }
 
-    // Get table configuration (is it a dynamic table or standard?)
-    const tableInfo = await prisma.metaTable.findUnique({
-        where: { slug: form.targetTable },
-        include: { fields: true }
-    });
+    let tableInfo = null;
+    if (form.target_table.startsWith('dyn-')) {
+        const slug = form.target_table.replace('dyn-', '');
+        tableInfo = await prisma.metaTable.findUnique({
+            where: { slug },
+            include: { fields: true }
+        });
+    }
 
     let modelName = '';
-    if (tableInfo) {
-        modelName = tableInfo.name;
+    if (TABLE_CONFIG[form.target_table]) {
+        const config = TABLE_CONFIG[form.target_table];
+        modelName = config.model;
     } else {
-        const config = TABLE_CONFIG[form.targetTable];
-        if (config) modelName = config.model;
-        else modelName = form.targetTable;
+        modelName = form.target_table;
     }
 
     let availableColumns: { name: string; type: string; label: string; isRequired: boolean }[] = [];
@@ -48,7 +50,7 @@ export default async function CustomFormDesignerPage({ params }: { params: Promi
 
     if (dmmfModel) {
         availableColumns = dmmfModel.fields
-            .filter(f => f.kind === 'scalar' && !['id', 'createdAt', 'updatedAt'].includes(f.name))
+            .filter(f => f.kind === 'scalar' && !['id', 'created_at', 'updated_at'].includes(f.name))
             .map(f => {
                 const meta = tableInfo?.fields.find(mf => mf.name === f.name);
                 return {
@@ -64,7 +66,7 @@ export default async function CustomFormDesignerPage({ params }: { params: Promi
         <div className="p-6 md:p-10 font-cairo min-h-screen bg-gray-50/50" dir="rtl">
             <FormDesigner
                 form={form}
-                tableName={tableInfo?.title || form.targetTable}
+                tableName={tableInfo?.title || form.target_table}
                 availableColumns={availableColumns}
             />
         </div>

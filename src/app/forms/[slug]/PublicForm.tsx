@@ -7,17 +7,17 @@ import S3FileUpload from '@/components/S3FileUpload';
 
 interface CustomFormField {
     id: number;
-    dbColumnName: string;
-    dbColumnType: string;
-    label: string;
-    inputType: string;
+    column_name: string;
+    data_type: string;
+    display_name: string;
+    ui_field_type: string;
     options: string | null;
-    isRequired: boolean;
-    helperText: string | null;
-    dependsOnColumn?: string | null;
-    dependsOnOperator?: string | null;
-    dependsOnValue?: string | null;
-    correctAnswer?: string | null;
+    is_required: boolean;
+    helper_text: string | null;
+    depends_on_field?: string | null;
+    dependency_operator?: string | null;
+    dependency_value?: string | null;
+    correct_answer?: string | null;
     points?: number | null;
 }
 
@@ -25,9 +25,9 @@ interface CustomForm {
     id: number;
     title: string;
     description: string | null;
-    isQuiz: boolean;
-    headerColor: string;
-    buttonColor: string;
+    is_quiz: boolean;
+    header_color: string;
+    button_color: string;
     fields: CustomFormField[];
 }
 
@@ -35,27 +35,27 @@ const inputClasses = "w-full p-4 bg-gray-50 border-b-2 border-gray-200 focus:bg-
 
 // Render different input types securely
 function renderField(field: CustomFormField, form: CustomForm, onChange: (val: string) => void) {
-    if (field.inputType === 'textarea') {
-        return <textarea name={field.dbColumnName} required={field.isRequired} rows={4} className={inputClasses} placeholder="إجابتك..." onChange={e => onChange(e.target.value)} />;
+    if (field.ui_field_type === 'textarea') {
+        return <textarea name={field.column_name} required={field.is_required} rows={4} className={inputClasses} placeholder="إجابتك..." onChange={e => onChange(e.target.value)} />;
     }
 
-    if (field.inputType === 'select') {
+    if (field.ui_field_type === 'select') {
         const options = field.options ? field.options.split(',').map(o => o.trim()) : [];
         return (
-            <select name={field.dbColumnName} required={field.isRequired} className={inputClasses} onChange={e => onChange(e.target.value)}>
+            <select name={field.column_name} required={field.is_required} className={inputClasses} onChange={e => onChange(e.target.value)}>
                 <option value="">-- اختر إجابة --</option>
                 {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
             </select>
         );
     }
 
-    if (field.inputType === 'radio') {
+    if (field.ui_field_type === 'radio') {
         const options = field.options ? field.options.split(',').map(o => o.trim()) : [];
         return (
             <div className="space-y-3 mt-4">
                 {options.map((opt, i) => (
                     <label key={i} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition">
-                        <input type="radio" name={field.dbColumnName} value={opt} required={field.isRequired} className="w-5 h-5 accent-dynamic" onChange={e => onChange(e.target.value)} />
+                        <input type="radio" name={field.column_name} value={opt} required={field.is_required} className="w-5 h-5 accent-dynamic" onChange={e => onChange(e.target.value)} />
                         <span className="text-gray-800 font-medium text-lg">{opt}</span>
                     </label>
                 ))}
@@ -63,30 +63,30 @@ function renderField(field: CustomFormField, form: CustomForm, onChange: (val: s
         );
     }
 
-    if (field.inputType === 'checkbox') {
+    if (field.ui_field_type === 'checkbox') {
         return (
             <label className="flex items-center gap-3 mt-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition">
-                <input type="checkbox" name={field.dbColumnName} className="w-6 h-6 rounded accent-dynamic" onChange={e => onChange(e.target.checked ? "نعم" : "لا")} />
+                <input type="checkbox" name={field.column_name} className="w-6 h-6 rounded accent-dynamic" onChange={e => onChange(e.target.checked ? "نعم" : "لا")} />
                 <span className="text-gray-800 font-medium text-lg">نعم / موافق</span>
             </label>
         );
     }
 
-    if (field.inputType === 'file') {
+    if (field.ui_field_type === 'file') {
         return (
             <div className="mt-2">
                 <S3FileUpload 
-                    name={field.dbColumnName}
+                    name={field.column_name}
                     folder="registrations"
                     onUploadComplete={(url) => onChange(url)}
-                    label={field.label}
-                    required={field.isRequired}
+                    label={field.display_name}
+                    required={field.is_required}
                 />
             </div>
         );
     }
 
-    if (field.inputType === 'grid') {
+    if (field.ui_field_type === 'grid') {
         let options = { rows: [], cols: [] };
         try { if (field.options) options = JSON.parse(field.options); } catch (e) {}
         
@@ -109,9 +109,9 @@ function renderField(field: CustomFormField, form: CustomForm, onChange: (val: s
                                     <td key={j} className="p-3 text-center">
                                         <input 
                                             type="radio" 
-                                            name={`${field.dbColumnName}_${row}`} 
+                                            name={`${field.column_name}_${row}`} 
                                             value={col} 
-                                            required={field.isRequired}
+                                            required={field.is_required}
                                             className="w-5 h-5 cursor-pointer accent-dynamic"
                                             onChange={(e) => {
                                                 const hiddenInput = document.getElementById(`grid_hidden_${field.id}`) as HTMLInputElement;
@@ -128,7 +128,7 @@ function renderField(field: CustomFormField, form: CustomForm, onChange: (val: s
                         ))}
                     </tbody>
                 </table>
-                <input type="hidden" id={`grid_hidden_${field.id}`} name={field.dbColumnName} value="" />
+                <input type="hidden" id={`grid_hidden_${field.id}`} name={field.column_name} value="" />
             </div>
         );
     }
@@ -136,12 +136,12 @@ function renderField(field: CustomFormField, form: CustomForm, onChange: (val: s
     // Default fallback (text, number, date, etc)
     return (
         <input
-            type={field.inputType}
-            name={field.dbColumnName}
-            required={field.isRequired}
+            type={field.ui_field_type}
+            name={field.column_name}
+            required={field.is_required}
             className={inputClasses}
-            style={{ borderBottomColor: (field as any).currentValue ? form.buttonColor : undefined }}
-            placeholder={field.inputType === 'text' ? "إجابتك..." : ""}
+            style={{ borderBottomColor: (field as any).currentValue ? form.button_color : undefined }}
+            placeholder={field.ui_field_type === 'text' ? "إجابتك..." : ""}
             onChange={e => onChange(e.target.value)}
         />
     );
@@ -151,8 +151,8 @@ function renderField(field: CustomFormField, form: CustomForm, onChange: (val: s
 function useDynamicTheme(form: CustomForm) {
     return (
         <style dangerouslySetInnerHTML={{ __html: `
-            .accent-dynamic { accent-color: ${form.buttonColor || '#9333ea'}; }
-            .focus-dynamic:focus { border-color: ${form.buttonColor || '#9333ea'}; }
+            .accent-dynamic { accent-color: ${form.button_color || '#9333ea'}; }
+            .focus-dynamic:focus { border-color: ${form.button_color || '#9333ea'}; }
         `}} />
     );
 }
@@ -169,12 +169,12 @@ export default function PublicForm({ form }: { form: CustomForm }) {
     };
 
     const isVisible = (field: CustomFormField) => {
-        if (!field.dependsOnColumn) return true;
+        if (!field.depends_on_field) return true;
         
-        const parentValue = formState[field.dependsOnColumn] || '';
-        const targetValue = field.dependsOnValue || '';
+        const parentValue = formState[field.depends_on_field] || '';
+        const targetValue = field.dependency_value || '';
         
-        if (field.dependsOnOperator === 'not_equals') {
+        if (field.dependency_operator === 'not_equals') {
             return parentValue !== targetValue;
         }
         return parentValue === targetValue;
@@ -188,7 +188,7 @@ export default function PublicForm({ form }: { form: CustomForm }) {
         const formData = new FormData(e.currentTarget);
         
         // Pass hidden fields array so backend ignores them during validation
-        const hiddenFields = form.fields.filter(f => !isVisible(f)).map(f => f.dbColumnName);
+        const hiddenFields = form.fields.filter(f => !isVisible(f)).map(f => f.column_name);
         formData.append('__hidden_fields', JSON.stringify(hiddenFields));
 
         const res = await submitCustomForm(form.id, null, formData);
@@ -197,14 +197,14 @@ export default function PublicForm({ form }: { form: CustomForm }) {
             setErrorMsg(res.message);
             setIsSubmitting(false);
         } else if (res?.success) {
-            if (form.isQuiz) {
+            if (form.is_quiz) {
                 let totalMarks = 0;
                 let earnedMarks = 0;
                 form.fields.forEach(f => {
                     if (f.points && f.points > 0) {
                         totalMarks += f.points;
-                        const userAns = formState[f.dbColumnName];
-                        if (userAns && f.correctAnswer && userAns.trim() === f.correctAnswer.trim()) {
+                        const userAns = formState[f.column_name];
+                        if (userAns && f.correct_answer && userAns.trim() === f.correct_answer.trim()) {
                             earnedMarks += f.points;
                         }
                     }
@@ -254,17 +254,17 @@ export default function PublicForm({ form }: { form: CustomForm }) {
                 return (
                     <div key={field.id} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all animate-in fade-in slide-in-from-bottom-2">
                         <label className="block text-xl font-bold text-gray-900 mb-2">
-                            {field.label} {field.isRequired && <span className="text-red-500 font-bold">*</span>}
+                            {field.display_name} {field.is_required && <span className="text-red-500 font-bold">*</span>}
                         </label>
 
-                        {field.helperText && (
+                        {field.helper_text && (
                             <div className="text-gray-500 text-sm mb-6 pb-4 border-b border-gray-50">
-                                {field.helperText}
+                                {field.helper_text}
                             </div>
                         )}
 
                         <div className="mt-4">
-                            {renderField(field, form, (val: string) => handleFieldChange(field.dbColumnName, val))}
+                            {renderField(field, form, (val: string) => handleFieldChange(field.column_name, val))}
                         </div>
                     </div>
                 );
@@ -275,7 +275,7 @@ export default function PublicForm({ form }: { form: CustomForm }) {
                     type="submit"
                     disabled={isSubmitting}
                     className="text-white py-4 px-10 rounded-full font-bold text-lg hover:scale-105 transition-all shadow-lg disabled:opacity-70 disabled:hover:scale-100 disabled:shadow-none"
-                    style={{ backgroundColor: form.buttonColor || '#9333ea', boxShadow: `0 10px 15px -3px ${form.buttonColor}44` }}
+                    style={{ backgroundColor: form.button_color || '#9333ea', boxShadow: `0 10px 15px -3px ${form.button_color}44` }}
                 >
                     {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرد'}
                 </button>

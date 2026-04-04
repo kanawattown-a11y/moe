@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { ArrowLeftRight, Plus, Route } from 'lucide-react';
 
 export default async function MovementsPage() {
-    const movements = await prisma.movement.findMany({
+    const movements = await prisma.transferOrLoan.findMany({
         include: {
             employee: true,
         },
         orderBy: {
-            id: 'desc'
+            start_date: 'desc'
         }
     });
 
@@ -46,13 +46,13 @@ export default async function MovementsPage() {
                                 </td>
                                 <td className="p-5">
                                     <span className="px-3 py-1 rounded-full text-xs font-bold border bg-accent/10 text-accent-dark border-accent/20">
-                                        {m.type || '-'}
+                                        {m.action_type || '-'}
                                     </span>
                                 </td>
-                                <td className="p-5 font-medium text-gray-700">{m.destination || '-'}</td>
+                                <td className="p-5 font-medium text-gray-700">{m.entity || '-'}</td>
                                 <td className="p-5 text-gray-500 text-sm">{m.decision_date?.toLocaleDateString('ar-SY') || '-'}</td>
-                                <td className="p-5 text-gray-500 text-sm">{m.leave_date?.toLocaleDateString('ar-SY') || '-'}</td>
-                                <td className="p-5 text-emerald-600 font-bold text-sm">{m.resumption_date?.toLocaleDateString('ar-SY') || '-'}</td>
+                                <td className="p-5 text-gray-500 text-sm">{m.start_date?.toLocaleDateString('ar-SY') || '-'}</td>
+                                <td className="p-5 text-emerald-600 font-bold text-sm">{m.return_date?.toLocaleDateString('ar-SY') || '-'}</td>
                                 <td className="p-5">
                                     <div className="flex gap-2">
                                         <Link href={`/admin/movements/${m.id}/edit`} className="text-blue-600 hover:text-blue-800 font-bold hover:underline text-sm px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">

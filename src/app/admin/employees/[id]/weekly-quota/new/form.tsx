@@ -50,8 +50,8 @@ export default function WeeklyQuotaForm({ employeeId, schools, complexes }: { em
             </div>
 
             <div className="flex items-center gap-3">
-                <input type="checkbox" id="is_extra" name="is_extra" className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary" />
-                <label htmlFor="is_extra" className="text-sm font-bold text-gray-700">تكليف بساعات إضافية (خارج أوقات الدوام أو نصاب إضافي)</label>
+                <input type="checkbox" id="is_additional" name="is_additional" className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary" />
+                <label htmlFor="is_additional" className="text-sm font-bold text-gray-700">تكليف بساعات إضافية (خارج أوقات الدوام أو نصاب إضافي)</label>
             </div>
 
             <div className="flex justify-end gap-4 mt-4 border-t border-gray-100 pt-6">

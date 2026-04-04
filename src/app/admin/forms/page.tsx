@@ -6,7 +6,7 @@ import { deleteForm } from './actions';
 export default async function CustomFormsPage() {
     const forms = await prisma.customForm.findMany({
         orderBy: {
-            createdAt: 'desc'
+            created_at: 'desc'
         }
     });
 
@@ -37,7 +37,7 @@ export default async function CustomFormsPage() {
                                         {form.isQuiz && <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold">اختبار تقييمي</span>}
                                     </h3>
                                     <p className="text-xs text-gray-500 flex flex-col gap-1 mt-1">
-                                        <span>جدول النظام: <span className="font-mono bg-gray-100 px-1 py-0.5 rounded text-gray-600">{form.targetTable}</span></span>
+                                        <span>جدول النظام: <span className="font-mono bg-gray-100 px-1 py-0.5 rounded text-gray-600">{form.target_table}</span></span>
                                     </p>
                                 </div>
                             </div>

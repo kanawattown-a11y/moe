@@ -9,7 +9,7 @@ export default async function CustomFormPublicPage({ params }: { params: Promise
         where: { slug },
         include: {
             fields: {
-                orderBy: { orderIndex: 'asc' }
+                orderBy: { order: 'asc' }
             }
         }
     });
@@ -18,14 +18,7 @@ export default async function CustomFormPublicPage({ params }: { params: Promise
         notFound();
     }
 
-    // Workaround for Prisma Client not being updated yet
-    const rawForm = await prisma.$queryRaw<any[]>`SELECT "لون_الترويسة" as "headerColor", "لون_الأزرار" as "buttonColor" FROM "نماذج_مخصصة" WHERE id = ${form.id}`;
-    if (rawForm && rawForm[0]) {
-        (form as any).headerColor = rawForm[0].headerColor;
-        (form as any).buttonColor = rawForm[0].buttonColor;
-    }
-
-    if (!form.isActive) {
+    if (!form.is_active) {
         return (
             <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6" dir="rtl">
                 <div className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 text-center max-w-lg w-full">
@@ -38,7 +31,7 @@ export default async function CustomFormPublicPage({ params }: { params: Promise
     }
 
     // Role-based authorization
-    if (form.allowedRoles && form.allowedRoles.trim() !== '') {
+    if (form.allowed_roles && form.allowed_roles.trim() !== '') {
         const session = await auth();
 
         if (!session || !session.user) {
@@ -55,7 +48,7 @@ export default async function CustomFormPublicPage({ params }: { params: Promise
         }
 
         const userRole = (session.user as any).role || '';
-        const allowedRolesList = form.allowedRoles.split(',').map((r: string) => r.trim().toLowerCase());
+        const allowedRolesList = form.allowed_roles.split(',').map((r: string) => r.trim().toLowerCase());
 
         if (!allowedRolesList.includes(userRole.toLowerCase()) && userRole !== 'admin') {
             return (
@@ -74,7 +67,7 @@ export default async function CustomFormPublicPage({ params }: { params: Promise
         <div className="min-h-screen bg-gray-50 font-cairo py-10 px-4" dir="rtl">
             <div className="max-w-3xl mx-auto">
                 {/* Form Header */}
-                <div className="bg-white rounded-t-3xl border-t-8 shadow-sm p-6 md:p-8 mb-6 transition-all duration-700" style={{ borderTopColor: (form as any).headerColor || '#9333ea' }}>
+                <div className="bg-white rounded-t-3xl border-t-8 shadow-sm p-6 md:p-8 mb-6 transition-all duration-700" style={{ borderTopColor: form.header_color || '#9333ea' }}>
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">{form.title}</h1>
                     {form.description && (
                         <div className="text-gray-600 text-base md:text-lg leading-relaxed whitespace-pre-wrap">

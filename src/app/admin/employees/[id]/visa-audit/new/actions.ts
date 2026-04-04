@@ -16,11 +16,11 @@ export async function addVisaAudit(employeeId: number, formData: FormData) {
         await prisma.visaAudit.create({
             data: {
                 employee_id: employeeId,
-                promotion_decision_name,
-                promotion_decision_num,
-                promotion_decision_date,
-                visa_decision_num,
-                visa_decision_date,
+                promotion_name: promotion_decision_name,
+                promotion_decision: promotion_decision_num,
+                promotion_date: promotion_decision_date,
+                visa_decision: visa_decision_num,
+                visa_date: visa_decision_date,
                 notes,
                 created_by: 'Admin'
             }

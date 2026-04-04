@@ -11,19 +11,19 @@ export async function submitCustomForm(formId: number, prevState: any, formData:
         include: { fields: true }
     });
 
-    if (!form || !form.isActive) return { message: 'النموذج غير متاح حالياً.' };
+    if (!form || !form.is_active) return { message: 'النموذج غير متاح حالياً.' };
 
     let dataPayload: any = {};
     let modelName = '';
 
     // Determine target Prisma model
-    if (form.targetTable.startsWith('dyn-')) {
-        const slug = form.targetTable.replace('dyn-', '');
+    if (form.target_table.startsWith('dyn-')) {
+        const slug = form.target_table.replace('dyn-', '');
         const metaTable = await prisma.metaTable.findUnique({ where: { slug } });
         if (!metaTable) return { message: 'الجدول الوجهة غير موجود' };
         modelName = metaTable.name;
     } else {
-        const config = TABLE_CONFIG[form.targetTable];
+        const config = TABLE_CONFIG[form.target_table];
         if (!config) return { message: 'إعدادات الجدول غير صحيحة' };
         modelName = config.model;
     }
@@ -34,20 +34,20 @@ export async function submitCustomForm(formId: number, prevState: any, formData:
 
         // Build payload
         for (const field of form.fields) {
-            if (hiddenFields.includes(field.dbColumnName)) {
+            if (hiddenFields.includes(field.column_name)) {
                 // Ignore completely, field wasn't seen by user
                 continue;
             }
 
-            const rawValue = formData.get(field.dbColumnName);
+            const rawValue = formData.get(field.column_name);
 
-            if (field.isRequired && (!rawValue || (rawValue instanceof File && rawValue.size === 0))) {
-                return { message: `الرجاء تعبئة الحقل المطلوب: ${field.label}` };
+            if (field.is_required && (!rawValue || (rawValue instanceof File && rawValue.size === 0))) {
+                return { message: `الرجاء تعبئة الحقل المطلوب: ${field.display_name}` };
             }
 
             if (rawValue === null || rawValue === '') continue;
 
-            if (field.inputType === 'file') {
+            if (field.ui_field_type === 'file') {
                 if (rawValue instanceof File && rawValue.size > 0) {
                     const bytes = await rawValue.arrayBuffer();
                     const buffer = Buffer.from(bytes);
@@ -55,21 +55,21 @@ export async function submitCustomForm(formId: number, prevState: any, formData:
                     const uploadDir = join(process.cwd(), 'public', 'uploads');
                     try { await mkdir(uploadDir, { recursive: true }); } catch (e) { }
                     await writeFile(join(uploadDir, fileName), buffer);
-                    dataPayload[field.dbColumnName] = `/uploads/${fileName}`;
+                    dataPayload[field.column_name] = `/uploads/${fileName}`;
                 } else if (typeof rawValue === 'string' && rawValue.startsWith('http')) {
                     // Already an S3 URL from frontend
-                    dataPayload[field.dbColumnName] = rawValue;
+                    dataPayload[field.column_name] = rawValue;
                 }
-            } else if (field.dbColumnType === 'Int') {
-                dataPayload[field.dbColumnName] = parseInt(rawValue as string);
-            } else if (field.dbColumnType === 'Float') {
-                dataPayload[field.dbColumnName] = parseFloat(rawValue as string);
-            } else if (field.dbColumnType === 'Boolean' || field.inputType === 'checkbox') {
-                dataPayload[field.dbColumnName] = rawValue === 'on';
-            } else if (field.dbColumnType === 'DateTime') {
-                dataPayload[field.dbColumnName] = new Date(rawValue as string);
+            } else if (field.data_type === 'Int') {
+                dataPayload[field.column_name] = parseInt(rawValue as string);
+            } else if (field.data_type === 'Float') {
+                dataPayload[field.column_name] = parseFloat(rawValue as string);
+            } else if (field.data_type === 'Boolean' || field.ui_field_type === 'checkbox') {
+                dataPayload[field.column_name] = rawValue === 'on' || rawValue === 'نعم';
+            } else if (field.data_type === 'DateTime') {
+                dataPayload[field.column_name] = new Date(rawValue as string);
             } else {
-                dataPayload[field.dbColumnName] = rawValue as string;
+                dataPayload[field.column_name] = rawValue as string;
             }
         }
 

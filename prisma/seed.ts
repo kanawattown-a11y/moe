@@ -8,7 +8,7 @@ async function main() {
     create: {
       username: 'admin',
       password: 'password123', // In a real app, hash this!
-      role_name: 'ADMIN',
+      role: 'ADMIN',
       is_active: true,
     },
   });

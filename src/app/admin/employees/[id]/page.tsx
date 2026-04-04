@@ -13,7 +13,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
         include: {
             school: true,
             job_title_current: true,
-            job_title_at_appt: true,
+            job_title_appointment: true,
             appointment_type: true,
             job_category: true,
             work_status: true,
@@ -30,7 +30,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
             transfers: true,
             promotions: true,
             terminations: true,
-            position_staffings: true,
+            staffing: true,
             category_modifications: {
                 include: {
                     new_category: true,
@@ -39,7 +39,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
             },
             weekly_quotas: {
                 include: {
-                    educational_complex: true,
+                    complex: true,
                     school: true
                 }
             },
@@ -237,7 +237,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                                 {prom.salary_after}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {prom.raise_percentage}%
+                                                {prom.allowance_percent}%
                                             </td>
                                         </tr>
                                     ))
@@ -379,36 +379,33 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                     </div>
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-gray-50/50">
                                 <tr>
                                     <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase">نمط التعيين</th>
                                     <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase">رقم القرار</th>
                                     <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase">تاريخ القرار</th>
-                                    <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase">ملاحظات</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
-                                {employee.position_staffings && employee.position_staffings.length > 0 ? (
-                                    employee.position_staffings.map((staffing: any) => (
-                                        <tr key={staffing.id} className="hover:bg-gray-50/50">
+                                {/* @ts-ignore - types are being generated */}
+                                {employee.staffing && employee.staffing.length > 0 ? (
+                                    employee.staffing.map((item: any) => (
+                                        <tr key={item.id} className="hover:bg-gray-50/50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                                {staffing.appointment_type || '-'}
+                                                {item.appointment_pattern || '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                {staffing.decision_number || '-'}
+                                                {item.decision_number || '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {staffing.decision_date ? new Date(staffing.decision_date).toLocaleDateString('ar-SY') : '-'}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {staffing.notes || '-'}
+                                                {item.decision_date ? new Date(item.decision_date).toLocaleDateString('ar-SY') : '-'}
                                             </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={4} className="px-6 py-12 text-center text-sm text-gray-500">
-                                            لا توجد قرارات ملاك مسجلة.
+                                        <td colSpan={3} className="px-6 py-8 text-center text-sm text-gray-500 italic">
+                                            لا توجد بيانات ملاك مسجلة
                                         </td>
                                     </tr>
                                 )}
@@ -505,16 +502,16 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                     employee.visa_audits.map((audit: any) => (
                                         <tr key={audit.id} className="hover:bg-gray-50/50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                                {audit.promotion_decision_name} ({audit.promotion_decision_num})
+                                                {audit.promotion_name} ({audit.promotion_decision})
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {audit.promotion_decision_date ? new Date(audit.promotion_decision_date).toLocaleDateString('ar-SY') : '-'}
+                                                {audit.promotion_date ? new Date(audit.promotion_date).toLocaleDateString('ar-SY') : '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-rose-600">
-                                                {audit.visa_decision_num || '-'}
+                                                {audit.visa_decision || '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {audit.visa_decision_date ? new Date(audit.visa_decision_date).toLocaleDateString('ar-SY') : '-'}
+                                                {audit.visa_date ? new Date(audit.visa_date).toLocaleDateString('ar-SY') : '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {audit.notes || '-'}
@@ -562,7 +559,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                     employee.weekly_quotas.map((quota: any) => (
                                         <tr key={quota.id} className="hover:bg-gray-50/50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                {quota.educational_complex?.name || '-'}
+                                                {quota.complex?.name || '-'}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                                 {quota.school?.name || '-'}
@@ -571,7 +568,7 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                                 {quota.hours || 0}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold">
-                                                {quota.is_extra ? <span className="text-emerald-500">نعم</span> : <span className="text-gray-400">لا</span>}
+                                                {quota.is_additional ? <span className="text-emerald-500">نعم</span> : <span className="text-gray-400">لا</span>}
                                             </td>
                                         </tr>
                                     ))
@@ -609,10 +606,10 @@ export default async function EmployeeDetailPage(props: { params: Promise<{ id: 
                                 {employee.documents.map((doc: any) => (
                                     <div key={doc.id} className="p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4 hover:shadow-md transition">
                                         <div className="w-12 h-12 rounded-lg bg-white border border-gray-100 flex items-center justify-center font-black text-primary uppercase text-[10px]">
-                                            {doc.file_type || 'DOC'}
+                                            {doc.type || 'DOC'}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-bold text-gray-900 truncate">{doc.title}</p>
+                                            <p className="text-gray-900 font-bold">{doc.title || '-'}</p>
                                             <p className="text-[10px] text-gray-400 font-bold">{new Date(doc.uploaded_at).toLocaleDateString('ar-SY')}</p>
                                         </div>
                                         <a href={doc.file_url} target="_blank" className="p-2 text-primary hover:bg-blue-50 rounded-lg transition">

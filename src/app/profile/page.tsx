@@ -20,7 +20,7 @@ export default async function ProfilePage() {
                     school: true,
                     job_category: true,
                     job_title_current: true,
-                    education_history: {
+                    educations: {
                         include: { certificate_type: true }
                     },
                     salary_records: {
@@ -127,16 +127,16 @@ export default async function ProfilePage() {
                                         </h3>
                                     </div>
                                     <div className="p-6">
-                                        {employee.education_history?.length > 0 ? (
+                                        {employee.educations?.length > 0 ? (
                                             <div className="space-y-4">
-                                                {employee.education_history.map((edu: any) => (
+                                                {employee.educations.map((edu: any) => (
                                                     <div key={edu.id} className="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-between">
                                                         <div>
                                                             <p className="font-bold text-gray-900">{edu.certificate_type?.name}</p>
                                                             <p className="text-sm text-gray-500">جامعة/معهد: {edu.university_id || 'غير معروف'}</p>
                                                         </div>
                                                         <div className="text-primary font-bold text-lg">
-                                                            {edu.graduation_year}
+                                                            {edu.grad_year}
                                                         </div>
                                                     </div>
                                                 ))}
@@ -174,10 +174,10 @@ export default async function ProfilePage() {
                                                         <tr key={record.id} className="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors">
                                                             <td className="py-4 font-bold text-gray-900">{record.month}/{record.year}</td>
                                                             <td className="py-4 text-gray-600 tabular-nums">{record.base_salary.toLocaleString()}</td>
-                                                            <td className="py-4 text-primary font-black tabular-nums">{record.total.toLocaleString()}</td>
+                                                            <td className="py-4 text-primary font-black tabular-nums">{record.net_salary.toLocaleString()}</td>
                                                             <td className="py-4">
-                                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${record.is_paid ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
-                                                                    {record.is_paid ? 'تم الصرف' : 'قيد المعالجة'}
+                                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${record.is_payout ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
+                                                                    {record.is_payout ? 'تم الصرف' : 'قيد المعالجة'}
                                                                 </span>
                                                             </td>
                                                         </tr>

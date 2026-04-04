@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { Plane, Plus, CalendarOff } from 'lucide-react';
 
 export default async function VacationsPage() {
-    const vacations = await prisma.vacation.findMany({
+    const vacations = await prisma.leaveRequest.findMany({
         include: {
             employee: true,
         },
         orderBy: {
-            id: 'desc'
+            start_date: 'desc'
         }
     });
 
@@ -45,7 +45,7 @@ export default async function VacationsPage() {
                                 </td>
                                 <td className="p-5">
                                     <span className="px-3 py-1 rounded-full text-xs font-bold border bg-gray-50 text-gray-700 border-gray-200">
-                                        {v.type || '-'}
+                                        {v.leave_type || '-'}
                                     </span>
                                 </td>
                                 <td className="p-5 text-gray-600 font-medium">{v.decision_num || '-'}</td>

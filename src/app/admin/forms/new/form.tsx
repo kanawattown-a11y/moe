@@ -60,7 +60,7 @@ export default function NewCustomForm({ tables }: { tables: MetaTable[] }) {
 
                 <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">الجدول المستهدف <span className="text-red-500">*</span></label>
-                    <select name="targetTable" required className={inputClasses}>
+                    <select name="target_table" required className={inputClasses}>
                         <option value="">-- اختر الجدول الذي سيتم حفظ البيانات فيه --</option>
                         {tables.map(table => (
                             <option key={table.id} value={table.slug}>
@@ -83,7 +83,7 @@ export default function NewCustomForm({ tables }: { tables: MetaTable[] }) {
                 <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">لون الشريط العلوي (Theme)</label>
                     <div className="flex gap-2">
-                        <input type="color" name="headerColor" defaultValue="#9333ea" className="w-12 h-12 rounded-xl border border-gray-300 p-1 cursor-pointer bg-gray-50" />
+                        <input type="color" name="header_color" defaultValue="#2563eb" className="w-12 h-12 rounded-xl border border-gray-300 p-1 cursor-pointer bg-gray-50" />
                         <input type="text" placeholder="#9333ea" className={inputClasses} onChange={(e) => {
                              const picker = (e.target as HTMLInputElement).previousElementSibling as HTMLInputElement;
                              if (e.target.value.match(/^#[0-9a-f]{6}$/) && picker) picker.value = e.target.value;
@@ -94,7 +94,7 @@ export default function NewCustomForm({ tables }: { tables: MetaTable[] }) {
                 <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">لون أزرار التنفيذ (Button)</label>
                     <div className="flex gap-2">
-                        <input type="color" name="buttonColor" defaultValue="#9333ea" className="w-12 h-12 rounded-xl border border-gray-300 p-1 cursor-pointer bg-gray-50" />
+                        <input type="color" name="button_color" defaultValue="#2563eb" className="w-12 h-12 rounded-xl border border-gray-300 p-1 cursor-pointer bg-gray-50" />
                         <input type="text" placeholder="#9333ea" className={inputClasses} onChange={(e) => {
                              const picker = (e.target as HTMLInputElement).previousElementSibling as HTMLInputElement;
                              if (e.target.value.match(/^#[0-9a-f]{6}$/) && picker) picker.value = e.target.value;
@@ -106,7 +106,7 @@ export default function NewCustomForm({ tables }: { tables: MetaTable[] }) {
                     <label className="block text-sm font-bold text-gray-700 mb-2">الأدوار المسموحة (Allowed Roles)</label>
                     <input
                         type="text"
-                        name="allowedRoles"
+                        name="allowed_roles"
                         className={inputClasses}
                         placeholder="اكتب الأدوار مفصولة بفاصلة، مثال: admin, user (اتركه فارغاً ليصبح متاحاً للعموم)"
                     />
@@ -115,7 +115,7 @@ export default function NewCustomForm({ tables }: { tables: MetaTable[] }) {
 
                 <div className="md:col-span-2 pt-4 border-t border-gray-100">
                     <label className="flex items-center gap-3 cursor-pointer bg-blue-50/50 p-4 rounded-xl border border-blue-100 w-full hover:bg-blue-50 transition">
-                        <input type="checkbox" name="isQuiz" value="true" className="w-6 h-6 accent-blue-600 rounded" />
+                        <input type="checkbox" name="is_quiz" value="true" className="w-6 h-6 accent-blue-600 rounded" />
                         <div>
                             <span className="font-bold text-blue-900 block">نمط المسابقات والاختبارات (Quiz Mode)</span>
                             <span className="text-xs text-blue-700 mt-1 block">تفعيل هذا الخيار يسمح لك بتحديد أجوبة صحيحة ومنح درجات تلقائية لكل سؤال للتقييم الآلي.</span>

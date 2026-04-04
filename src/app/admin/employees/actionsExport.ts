@@ -19,7 +19,7 @@ export async function exportEmployeesCSV(filters: { school_id?: number; status_i
     
     const employees = await prisma.employee.findMany({
         where,
-        include: { school: true, job_title_current: true, status: true },
+        include: { school: true, job_title_current: true, work_status: true },
         orderBy: { last_name: 'asc' }
     });
 
@@ -32,7 +32,7 @@ export async function exportEmployeesCSV(filters: { school_id?: number; status_i
         emp.gender === 'male' ? 'ذكر' : 'أنثى',
         emp.school?.name || '',
         emp.job_title_current?.name || '',
-        emp.status?.name || ''
+        emp.work_status?.name || ''
     ]);
 
     const csvContent = [

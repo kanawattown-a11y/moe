@@ -5,38 +5,38 @@ import { revalidatePath } from 'next/cache';
 
 export async function addFieldToForm(prevState: any, formData: FormData) {
     const formId = Number(formData.get('formId'));
-    const dbColumnName = formData.get('dbColumnName') as string;
-    const dbColumnType = formData.get('dbColumnType') as string;
-    const label = formData.get('label') as string;
+    const column_name = formData.get('dbColumnName') as string;
+    const data_type = formData.get('dbColumnType') as string;
+    const display_name = formData.get('label') as string;
 
-    if (!formId || !dbColumnName || !dbColumnType || !label) {
+    if (!formId || !column_name || !data_type || !display_name) {
         return { message: 'يجب تعبئة اسم العمود، نوع البيانات، والاسم المعروض.' };
     }
 
     try {
-        // Get current max orderIndex
+        // Get current max order
         const maxOrder = await prisma.customFormField.aggregate({
-            where: { formId },
-            _max: { orderIndex: true }
+            where: { form_id: formId },
+            _max: { order: true }
         });
-        const nextOrder = (maxOrder._max.orderIndex || 0) + 1;
+        const nextOrder = (maxOrder._max.order || 0) + 1;
 
         await prisma.customFormField.create({
             data: {
-                formId,
-                dbColumnName,
-                dbColumnType,
-                label,
-                inputType: formData.get('inputType') as string || 'text',
+                form_id: formId,
+                column_name,
+                data_type,
+                display_name,
+                ui_field_type: formData.get('inputType') as string || 'text',
                 options: formData.get('options') as string,
-                helperText: formData.get('helperText') as string,
-                isRequired: formData.get('isRequired') === 'true',
-                dependsOnColumn: formData.get('dependsOnColumn') as string || null,
-                dependsOnOperator: formData.get('dependsOnOperator') as string || 'equals',
-                dependsOnValue: formData.get('dependsOnValue') as string || null,
-                correctAnswer: formData.get('correctAnswer') as string || null,
+                helper_text: formData.get('helperText') as string,
+                is_required: formData.get('isRequired') === 'true',
+                depends_on_field: formData.get('dependsOnColumn') as string || null,
+                dependency_operator: formData.get('dependsOnOperator') as string || 'equals',
+                dependency_value: formData.get('dependsOnValue') as string || null,
+                correct_answer: formData.get('correctAnswer') as string || null,
                 points: Number(formData.get('points')) || 0,
-                orderIndex: nextOrder
+                order: nextOrder
             }
         });
 
@@ -59,22 +59,15 @@ export async function removeFieldFromForm(fieldId: number, formId: number) {
 
 export async function updateFormSettings(formId: number, data: { title: string, description?: string, headerColor: string, buttonColor: string }) {
     try {
-        // Standard update for title/description
         await prisma.customForm.update({
             where: { id: formId },
             data: {
                 title: data.title,
-                description: data.description
+                description: data.description,
+                header_color: data.headerColor,
+                button_color: data.buttonColor
             }
         });
-
-        // Raw SQL for headerColor/buttonColor to bypass Prisma Client generation issues
-        await prisma.$executeRaw`
-            UPDATE "نماذج_مخصصة" 
-            SET "لون_الترويسة" = ${data.headerColor}, 
-                "لون_الأزرار" = ${data.buttonColor} 
-            WHERE id = ${formId}
-        `;
 
         revalidatePath(`/admin/forms/${formId}`);
         return { success: true };

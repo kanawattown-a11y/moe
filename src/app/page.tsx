@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import LandingPageClient from "./LandingPageClient";
 
 export default async function LandingPage() {
-  const latestNews = await prisma.article.findMany({
+  const latestNews = await prisma.news.findMany({
     where: { is_published: true },
     orderBy: { created_at: 'desc' },
     take: 3,

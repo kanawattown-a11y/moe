@@ -43,7 +43,7 @@ export async function createArticle(prevState: any, formData: FormData) {
     try {
         const slug = title.trim().replace(/\s+/g, '-') + '-' + Date.now();
 
-        await prisma.article.create({
+        await prisma.news.create({
             data: {
                 title,
                 content,

@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function PublicNewsPage() {
-    const articles = await prisma.article.findMany({
+    const articles = await prisma.news.findMany({
         where: { is_published: true },
         orderBy: { created_at: 'desc' },
     });

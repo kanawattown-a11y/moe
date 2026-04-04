@@ -41,14 +41,14 @@ export async function generateSalaries(month: number, year: number) {
                     base_salary: baseSalary,
                     allowances: allowances,
                     deductions: deductions,
-                    total: total,
+                    net_salary: total,
                     is_paid: false
                 }
             });
 
             // Notify the user if they have a linked account
             const linkedUser = await prisma.user.findFirst({ 
-                where: { employee_id: emp.id } 
+                where: { linked_employee_id: emp.id } 
             });
             
             if (linkedUser) {
@@ -56,7 +56,7 @@ export async function generateSalaries(month: number, year: number) {
                     data: {
                         user_id: linkedUser.id,
                         title: 'تم إصدار كشف الراتب',
-                        message: `تم توليد كشف الراتب لشهر ${month}/${year}. المبلغ الصافي: ${record.total.toLocaleString()} ل.س`,
+                        message: `تم توليد كشف الراتب لشهر ${month}/${year}. المبلغ الصافي: ${record.net_salary.toLocaleString()} ل.س`,
                         type: 'info'
                     }
                 });
@@ -88,7 +88,7 @@ export async function markAsPaid(recordId: number) {
 
     // Notify the user
     const linkedUser = await prisma.user.findFirst({ 
-        where: { employee_id: record.employee_id } 
+        where: { linked_employee_id: record.employee_id } 
     });
 
     if (linkedUser) {

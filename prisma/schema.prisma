@@ -40,8 +40,8 @@ model MetaTable {
   name           String         @unique
   slug           String         @unique
   title          String
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
   isSystem       Boolean        @default(false)
   
   fields         MetaField[]
@@ -154,6 +154,7 @@ model News {
   created_at      DateTime @default(now()) @map("تاريخ_الإنشاء")
   updated_at      DateTime @updatedAt @map("تاريخ_التحديث")
   author_id       Int?     @map("معرف_الكاتب")
+  author          User?    @relation(fields: [author_id], references: [id])
 
   @@map("جدول_الاخبار")
 }
@@ -460,13 +461,14 @@ model User {
   id              Int      @id @default(autoincrement()) @map("معرف_المستخدم")
   username        String   @unique @map("اسم_المستخدم")
   password        String   @map("كلمة_المرور")
-  role_name       String?  @map("اسم_الدور")
+  role            String?  @map("اسم_الدور")
   permissions     Json?
   is_active       Boolean  @default(true) @map("فعال")
   linked_employee_id Int?  @unique @map("معرف_الموظف_المرتبط")
 
   notifications   Notification[]
   books           Book[]
+  news            News[]
 
   @@map("جدول_المستخدمين")
 }

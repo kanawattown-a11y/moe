@@ -15,17 +15,17 @@ interface AvailableColumn {
 
 interface CustomFormField {
     id: number;
-    dbColumnName: string;
-    dbColumnType: string;
-    label: string;
-    inputType: string;
+    column_name: string;
+    data_type: string;
+    display_name: string;
+    ui_field_type: string;
     options: string | null;
-    isRequired: boolean;
-    helperText: string | null;
-    dependsOnColumn: string | null;
-    dependsOnOperator: string | null;
-    dependsOnValue: string | null;
-    correctAnswer: string | null;
+    is_required: boolean;
+    helper_text: string | null;
+    depends_on_field: string | null;
+    dependency_operator: string | null;
+    dependency_value: string | null;
+    correct_answer: string | null;
     points: number | null;
 }
 
@@ -34,10 +34,10 @@ interface CustomForm {
     title: string;
     description: string | null;
     slug: string;
-    targetTable: string;
-    isQuiz: boolean;
-    headerColor: string;
-    buttonColor: string;
+    target_table: string;
+    is_quiz: boolean;
+    header_color: string;
+    button_color: string;
     fields: CustomFormField[];
 }
 
@@ -56,8 +56,8 @@ export default function FormDesigner({ form, tableName, availableColumns = [] }:
     // Form settings state
     const [formTitle, setFormTitle] = useState(form.title);
     const [formDesc, setFormDesc] = useState(form.description || '');
-    const [headerColor, setHeaderColor] = useState(form.headerColor || '#9333ea');
-    const [buttonColor, setButtonColor] = useState(form.buttonColor || '#9333ea');
+    const [headerColor, setHeaderColor] = useState(form.header_color || '#9333ea');
+    const [buttonColor, setButtonColor] = useState(form.button_color || '#9333ea');
 
     const handleAddField = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -190,19 +190,19 @@ export default function FormDesigner({ form, tableName, availableColumns = [] }:
                                     {index + 1}
                                 </div>
                                 <div className="p-2 bg-gray-50 rounded-lg">
-                                    {getIconForInput(field.inputType)}
+                                    {getIconForInput(field.ui_field_type)}
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                                        {field.label}
-                                        {field.isRequired && <span className="text-xs text-red-500 bg-red-50 px-2 rounded-full">إجباري</span>}
+                                        {field.display_name}
+                                        {field.is_required && <span className="text-xs text-red-500 bg-red-50 px-2 rounded-full">إجباري</span>}
                                     </h3>
                                     <p className="text-xs text-gray-500 mt-1 font-mono">
-                                        العمود: {field.dbColumnName} ({field.dbColumnType}) | نوع الإدخال: {field.inputType}
+                                        العمود: {field.column_name} ({field.data_type}) | نوع الإدخال: {field.ui_field_type}
                                     </p>
-                                    {field.dependsOnColumn && (
+                                    {field.depends_on_field && (
                                         <p className="text-xs font-bold text-blue-600 mt-1 bg-blue-50 px-2 py-0.5 rounded inline-block border border-blue-100">
-                                            الشرط: لا يظهر إلا إذا كان ({field.dependsOnColumn}) {field.dependsOnOperator === 'equals' ? 'يساوي' : 'لا يساوي'} "{field.dependsOnValue}"
+                                            الشرط: لا يظهر إلا إذا كان ({field.depends_on_field}) {field.dependency_operator === 'equals' ? 'يساوي' : 'لا يساوي'} "{field.dependency_value}"
                                         </p>
                                     )}
                                 </div>
@@ -349,7 +349,7 @@ export default function FormDesigner({ form, tableName, availableColumns = [] }:
                                     <select name="dependsOnColumn" className={inputClasses}>
                                         <option value="">-- بدون شرط (يظهر دائماً) --</option>
                                         {form.fields.map(f => (
-                                            <option key={f.id} value={f.dbColumnName}>{f.label}</option>
+                                            <option key={f.id} value={f.column_name}>{f.display_name}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -368,7 +368,7 @@ export default function FormDesigner({ form, tableName, availableColumns = [] }:
                             <p className="text-xs text-blue-600">سيظل هذا الحقل مخفياً عن المستخدم ولن يظهر إلا إذا كانت إجابة السؤال السابق مطابقة للقيمة المدخلة هنا.</p>
                         </div>
 
-                        {form.isQuiz && (
+                        {(form as any).is_quiz && (
                             <div className="bg-green-50/40 p-6 rounded-xl border border-green-100 space-y-4 mb-6">
                                 <h3 className="font-bold text-green-900 border-b border-green-100 pb-2">إعدادات الاختبار والتقييم</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

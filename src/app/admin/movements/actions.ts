@@ -11,18 +11,14 @@ export async function createMovement(prevState: any, formData: FormData) {
     }
 
     try {
-        await prisma.movement.create({
+        await prisma.transferOrLoan.create({
             data: {
-                employee_id: Number(employee_id),
-                type: formData.get('type') as string,
+                employee_id: parseInt(formData.get('employee_id') as string),
+                action_type: formData.get('type') as string,
                 decision_num: formData.get('decision_num') as string,
-                decision_date: formData.get('decision_date') ? new Date(formData.get('decision_date') as string) : null,
-                destination: formData.get('destination') as string,
-                leave_date: formData.get('leave_date') ? new Date(formData.get('leave_date') as string) : null,
-                resumption_date: formData.get('resumption_date') ? new Date(formData.get('resumption_date') as string) : null,
-                end_decision_num: formData.get('end_decision_num') as string,
-                end_decision_date: formData.get('end_decision_date') ? new Date(formData.get('end_decision_date') as string) : null,
-                notes: formData.get('notes') as string,
+                entity: formData.get('destination') as string,
+                start_date: formData.get('leave_date') ? new Date(formData.get('leave_date') as string) : null,
+                return_date: formData.get('resumption_date') ? new Date(formData.get('resumption_date') as string) : null,
             }
         });
     } catch (error) {

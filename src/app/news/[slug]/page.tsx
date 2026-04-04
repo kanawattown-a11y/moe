@@ -9,7 +9,7 @@ export default async function ArticlePage(props: { params: Promise<{ slug: strin
     const isId = !isNaN(Number(params.slug));
     const where = isId ? { id: Number(params.slug) } : { slug: params.slug };
 
-    const article = await prisma.article.findFirst({
+    const article = await prisma.news.findFirst({
         where: {
             ...where,
             is_published: true,

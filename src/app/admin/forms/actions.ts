@@ -7,11 +7,11 @@ import { redirect } from 'next/navigation';
 export async function createForm(prevState: any, formData: FormData) {
     const title = formData.get('title') as string;
     const slug = formData.get('slug') as string;
-    const targetTable = formData.get('targetTable') as string;
+    const target_table = formData.get('target_table') as string;
     const description = formData.get('description') as string;
     const allowedRoles = formData.get('allowedRoles') as string;
 
-    if (!title || !slug || !targetTable) {
+    if (!title || !slug || !target_table) {
         return { message: 'يجب تعبئة الحقول الإجبارية: العنوان، الرابط الدائم، والجدول المستهدف.' };
     }
 
@@ -21,13 +21,13 @@ export async function createForm(prevState: any, formData: FormData) {
                     data: {
                         title,
                         slug,
-                        targetTable,
+                        target_table,
                         description,
-                        allowedRoles: allowedRoles || null,
-                        isQuiz: formData.get('isQuiz') === 'true',
-                        headerColor: formData.get('headerColor') as string || "#9333ea",
-                        buttonColor: formData.get('buttonColor') as string || "#9333ea",
-                        isActive: true
+                        allowed_roles: allowedRoles || null,
+                        is_quiz: formData.get('is_quiz') === 'true',
+                        header_color: formData.get('header_color') as string || "#2563eb",
+                        button_color: formData.get('button_color') as string || "#2563eb",
+                        is_active: true
                     }
                 });
     } catch (error: any) {

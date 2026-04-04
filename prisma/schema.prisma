@@ -463,7 +463,7 @@ model School {
   @@map("جدول_المدارس")
 }
 model City {
-  id              Int      @id @map("معرف_المدينة")
+  id              Int      @id @default(autoincrement()) @map("معرف_المدينة")
   name            String?  @map("المدينة")
 
   employees       Employee[]

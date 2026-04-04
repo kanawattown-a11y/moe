@@ -306,7 +306,10 @@ import { AuthError } from 'next-auth';
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
     try {
-        await signIn('credentials', formData);
+        await signIn('credentials', {
+            ...Object.fromEntries(formData),
+            redirectTo: '/admin/employees', 
+        });
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -316,6 +319,7 @@ export async function authenticate(prevState: string | undefined, formData: Form
                     return 'حدث خطأ غير متوقع.';
             }
         }
+        // Re-throw redirect errors so Next.js can handle them
         throw error;
     }
 }

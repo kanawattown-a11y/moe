@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { uploadFileToS3 } from '@/lib/s3';
 
 import { createAuditLog } from '@/services/audit-service';
@@ -142,7 +143,7 @@ export async function updateEmployee(id: number, formData: FormData) {
 
 import { auth } from '@/auth';
 
-export async function createArticle(formData: FormData) {
+export async function createArticle(prevState: any, formData: FormData) {
     const session = await auth();
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
@@ -170,7 +171,71 @@ export async function createArticle(formData: FormData) {
         details: `Created news article: ${title}`,
     });
 
+    revalidatePath('/news');
+    revalidatePath('/admin/news');
+    revalidatePath('/');
     redirect('/admin/news');
+}
+
+export async function updateArticle(prevState: any, formData: FormData) {
+    const session = await auth();
+    if (!session) throw new Error("Unauthorized");
+
+    const id = Number(formData.get('id'));
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
+    const excerpt = formData.get('excerpt') as string;
+    const imageUrl = formData.get('image_url') as string;
+    const isPublished = formData.get('is_published') === 'true' || formData.get('is_published') === 'on';
+
+    // Regenerate slug if title changed (optional, but good for SEO)
+    const slug = title.trim().replace(/\s+/g, '-') + '-' + id;
+
+    const article = await prisma.news.update({
+        where: { id },
+        data: {
+            title,
+            content,
+            excerpt,
+            image_url: imageUrl,
+            slug,
+            is_published: isPublished,
+        },
+    });
+
+    await createAuditLog({
+        action: 'UPDATE',
+        resource: 'Article',
+        resourceId: id.toString(),
+        details: `Updated news article: ${title}`,
+    });
+
+    revalidatePath(`/news/${article.slug}`);
+    revalidatePath('/news');
+    revalidatePath('/admin/news');
+    revalidatePath('/');
+    redirect('/admin/news');
+}
+
+export async function deleteArticle(id: number) {
+    const session = await auth();
+    if (!session) throw new Error("Unauthorized");
+
+    const article = await prisma.news.delete({
+        where: { id },
+    });
+
+    await createAuditLog({
+        action: 'DELETE',
+        resource: 'Article',
+        resourceId: id.toString(),
+        details: `Deleted news article: ${article.title}`,
+    });
+
+    revalidatePath('/news');
+    revalidatePath('/admin/news');
+    revalidatePath('/');
+    return { success: true };
 }
 
 export async function createBook(formData: FormData) {

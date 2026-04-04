@@ -751,6 +751,7 @@ model CustomFormField {
 
   form                CustomForm @relation(fields: [form_id], references: [id], onDelete: Cascade)
 
+  @@unique([form_id, column_name], name: "form_id_column_name")
   @@map("حقول_نماذج_مخصصة")
 }
 model CustomForm {

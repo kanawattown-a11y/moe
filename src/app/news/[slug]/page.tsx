@@ -5,9 +5,10 @@ import { notFound } from 'next/navigation';
 
 export default async function ArticlePage(props: { params: Promise<{ slug: string }> }) {
     const params = await props.params;
-    // Check if slug is numeric (ID) or string (Slug)
-    const isId = !isNaN(Number(params.slug));
-    const where = isId ? { id: Number(params.slug) } : { slug: params.slug };
+    // Decode the slug to handle Arabic characters correctly
+    const decodedSlug = decodeURIComponent(params.slug);
+    const isId = !isNaN(Number(decodedSlug));
+    const where = isId ? { id: Number(decodedSlug) } : { slug: decodedSlug };
 
     const article = await prisma.news.findFirst({
         where: {

@@ -1,9 +1,10 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Newspaper, Plus, AlertCircle } from 'lucide-react';
+import { Newspaper, Plus, AlertCircle, Pencil } from 'lucide-react';
 
 import SearchBar from '../employees/SearchBar';
+import DeleteArticleButton from './components/DeleteArticleButton';
 
 async function getArticles(query: string) {
     const where: any = {};
@@ -82,13 +83,18 @@ export default async function AdminNewsPage(props: { searchParams: Promise<{ q?:
                                     </span>
                                 </td>
                                 <td className="p-5">
-                                    <div className="flex gap-2">
-                                        <button className="text-blue-600 hover:text-blue-800 font-bold hover:underline text-sm px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
-                                            تعديل
-                                        </button>
-                                        <button className="text-red-500 hover:text-red-700 font-bold hover:underline text-sm px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors border border-transparent hover:border-red-100">
-                                            حذف
-                                        </button>
+                                    <div className="flex gap-2 items-center">
+                                        <Link 
+                                            href={`/admin/news/${article.id}/edit`}
+                                            className="text-blue-600 hover:text-blue-800 font-bold hover:underline text-sm px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-1"
+                                        >
+                                            <Pencil size={14} />
+                                            <span>تعديل</span>
+                                        </Link>
+                                        <DeleteArticleButton 
+                                            id={article.id} 
+                                            title={article.title} 
+                                        />
                                     </div>
                                 </td>
                             </tr>

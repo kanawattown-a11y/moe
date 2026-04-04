@@ -24,6 +24,7 @@ type State = {
     errors?: {
         role?: string[];
         password?: string[];
+        confirmPassword?: string[];
     };
 };
 
@@ -41,15 +42,29 @@ export default function EditUserForm({ user, employeeOptions = [] }: { user: any
                     <p className="text-xs text-gray-400 mt-1">لا يمكن تغيير اسم المستخدم</p>
                 </div>
 
-                <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">كلمة المرور الجديدة</label>
-                    <input
-                        name="password"
-                        type="password"
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
-                        placeholder="اتركها فارغة إذا كنت لا تريد التغيير"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">يجب أن تكون 6 أحرف على الأقل في حال التغيير</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">كلمة المرور الجديدة</label>
+                        <input
+                            name="password"
+                            type="password"
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
+                            placeholder="اتركها فارغة إذا كنت لا تريد التغيير"
+                        />
+                        {state?.errors?.password && <p className="text-red-500 text-sm mt-1">{state.errors.password}</p>}
+                        <p className="text-[10px] text-gray-400 mt-1">يجب أن تكون 6 أحرف على الأقل في حال التغيير</p>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">تأكيد كلمة المرور</label>
+                        <input
+                            name="confirmPassword"
+                            type="password"
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
+                            placeholder="أعد كتابة كلمة المرور"
+                        />
+                        {state?.errors?.confirmPassword && <p className="text-red-500 text-sm mt-1">{state.errors.confirmPassword}</p>}
+                    </div>
                 </div>
 
                 <div>

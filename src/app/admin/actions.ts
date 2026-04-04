@@ -10,14 +10,19 @@ import { createAuditLog } from '@/services/audit-service'
 const CreateUserSchema = z.object({
     username: z.string().min(3, { message: 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل' }),
     password: z.string().min(6, { message: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' }),
+    confirmPassword: z.string().min(1, { message: 'يرجى تأكيد كلمة المرور' }),
     role: z.string().min(1, { message: 'يرجى اختيار الدور' }),
     employeeId: z.coerce.number().optional().nullable(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: 'كلمات المرور غير متطابقة',
+    path: ['confirmPassword'],
 })
 
 export async function createUser(prevState: any, formData: FormData) {
     const validatedFields = CreateUserSchema.safeParse({
         username: formData.get('username'),
         password: formData.get('password'),
+        confirmPassword: formData.get('confirmPassword'),
         role: formData.get('role'),
         employeeId: formData.get('employeeId') ? Number(formData.get('employeeId')) : null,
     })
@@ -67,13 +72,31 @@ export async function createUser(prevState: any, formData: FormData) {
 const UpdateUserSchema = z.object({
     role: z.string().min(1, { message: 'يرجى اختيار الدور' }),
     password: z.string().optional(),
+    confirmPassword: z.string().optional(),
     employeeId: z.coerce.number().optional().nullable(),
+}).refine((data) => {
+    if (data.password && data.password.length > 0) {
+        return data.password === data.confirmPassword;
+    }
+    return true;
+}, {
+    message: 'كلمات المرور غير متطابقة',
+    path: ['confirmPassword'],
+}).refine((data) => {
+    if (data.password && data.password.length > 0) {
+        return data.password.length >= 6;
+    }
+    return true;
+}, {
+    message: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل',
+    path: ['password'],
 })
 
 export async function updateUser(userId: number, prevState: any, formData: FormData) {
     const validatedFields = UpdateUserSchema.safeParse({
         role: formData.get('role'),
         password: formData.get('password') || undefined,
+        confirmPassword: formData.get('confirmPassword') || undefined,
         employeeId: formData.get('employeeId') ? Number(formData.get('employeeId')) : null,
     })
 

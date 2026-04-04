@@ -25,6 +25,7 @@ type State = {
     errors?: {
         username?: string[];
         password?: string[];
+        confirmPassword?: string[];
         role?: string[];
     };
 };
@@ -47,15 +48,28 @@ export default function NewUserForm({ employeeOptions }: { employeeOptions: any[
                     {state?.errors?.username && <p className="text-red-500 text-sm mt-1">{state.errors.username}</p>}
                 </div>
 
-                <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">كلمة المرور</label>
-                    <input
-                        name="password"
-                        type="password"
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
-                        placeholder="******"
-                    />
-                    {state?.errors?.password && <p className="text-red-500 text-sm mt-1">{state.errors.password}</p>}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">كلمة المرور</label>
+                        <input
+                            name="password"
+                            type="password"
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
+                            placeholder="******"
+                        />
+                        {state?.errors?.password && <p className="text-red-500 text-sm mt-1">{state.errors.password}</p>}
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">تأكيد كلمة المرور</label>
+                        <input
+                            name="confirmPassword"
+                            type="password"
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-primary font-medium focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all"
+                            placeholder="******"
+                        />
+                        {state?.errors?.confirmPassword && <p className="text-red-500 text-sm mt-1">{state.errors.confirmPassword}</p>}
+                    </div>
                 </div>
 
                 <div>

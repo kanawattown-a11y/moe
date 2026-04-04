@@ -34,15 +34,15 @@ export default async function PayrollPage(props: { searchParams: Promise<{ month
         base_salary: Number(r.base_salary),
         allowances: Number(r.allowances),
         deductions: Number(r.deductions),
-        total: Number(r.total),
+        net_salary: Number(r.net_salary),
         created_at: r.created_at?.toISOString(),
         updated_at: r.updated_at?.toISOString(),
     }));
 
     const summary = {
-        totalExpenses: serializedRecords.reduce((acc: number, r: any) => acc + r.total, 0),
-        paidCount: serializedRecords.filter((r: any) => r.is_paid).length,
-        pendingCount: serializedRecords.filter((r: any) => !r.is_paid).length,
+        totalExpenses: serializedRecords.reduce((acc: number, r: any) => acc + r.net_salary, 0),
+        paidCount: serializedRecords.filter((r: any) => r.is_payout).length,
+        pendingCount: serializedRecords.filter((r: any) => !r.is_payout).length,
     };
 
     return (

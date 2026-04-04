@@ -42,7 +42,7 @@ export async function generateSalaries(month: number, year: number) {
                     allowances: allowances,
                     deductions: deductions,
                     net_salary: total,
-                    is_paid: false
+                    is_payout: false
                 }
             });
 
@@ -82,7 +82,7 @@ export async function generateSalaries(month: number, year: number) {
 export async function markAsPaid(recordId: number) {
     const record = await prisma.salaryRecord.update({
         where: { id: recordId },
-        data: { is_paid: true },
+        data: { is_payout: true },
         include: { employee: true }
     });
 

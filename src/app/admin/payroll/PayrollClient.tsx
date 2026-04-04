@@ -154,10 +154,10 @@ export default function PayrollClient({ records, summary }: any) {
                                         <td className="px-8 py-6 text-emerald-600 font-bold tabular-nums">+{Number(record.allowances).toLocaleString()}</td>
                                         <td className="px-8 py-6 text-rose-500 font-bold tabular-nums">-{Number(record.deductions).toLocaleString()}</td>
                                         <td className="px-8 py-6 font-black text-gray-900 text-lg tabular-nums">
-                                            {Number(record.total).toLocaleString()}
+                                            {Number(record.net_salary).toLocaleString()}
                                         </td>
                                         <td className="px-8 py-6 text-left">
-                                            {record.is_paid ? (
+                                            {record.is_payout ? (
                                                 <span className="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 justify-center w-32 border border-emerald-200">
                                                     <CheckCircle size={14} /> تم الصرف
                                                 </span>
